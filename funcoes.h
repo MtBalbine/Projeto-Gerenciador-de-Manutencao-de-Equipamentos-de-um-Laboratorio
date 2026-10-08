@@ -1,7 +1,7 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 
-#include <ctype.h> // Biblioteca para funções de manipulação de caracteres 
+#include <ctype.h> // Biblioteca para funções de manipulação de caracteres
 #include <string.h> // Biblioteca para funções de manipulação de strings
 
 /*
@@ -87,7 +87,7 @@ int LerCodigoEquipamento(char codigo[])
             {
                 if (isalpha((unsigned char)caractere))
                 {
-                    codigo[tamanho] = (char)toupper((unsigned char)caractere); // unsigned char = positivo, toupper = converte para maiúscula, 
+                    codigo[tamanho] = (char)toupper((unsigned char)caractere); // unsigned char = positivo, toupper = converte para maiúscula,
                 }
                 else
                 {
@@ -304,7 +304,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
            (prioridade == 1 && prazo > 7) ||
            (prioridade == 2 && prazo > 15) ||
            (prioridade == 3 && prazo > 20));
-    
+
 
 
      // Insere o chamado diretamente na posição correta pelo código.
@@ -424,7 +424,6 @@ void exibirOrdemManutencao(Chamados *lista)
         }
     }
 
-    // ===== AQUI: PAUSA =====
     printf("\nPressione ENTER para voltar ao menu...");
     getchar();
 
