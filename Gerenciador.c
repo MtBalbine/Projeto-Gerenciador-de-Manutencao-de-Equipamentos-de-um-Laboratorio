@@ -8,18 +8,18 @@ int main()
     setlocale(LC_ALL, "Portuguese");
 
     int opcao = 0;
-    
+
     Chamados* lista  = InicializaListaChamado();
 
     do
     {
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
-        printf("1 - Novo chamado\n");
-        printf("2 - Listar chamados\n");
-        printf("3 - Buscar chamado\n");
-        printf("4 - Atualizar chamado\n");
-        printf("5 - Excluir chamado\n");
-        printf("0 - Sair\n");
+        printf("1 - Novo chamado\n"); // matheus finalizar
+        printf("2 - Listar chamados\n"); // lele
+        printf("3 - Buscar chamado\n"); // ju
+        printf("4 - Atualizar chamado\n"); //matheus
+        printf("5 - Excluir chamado\n"); // so
+        printf("0 - Sair\n"); // so
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
         getchar();
@@ -68,7 +68,7 @@ int main()
 
     } while (opcao != 0);
 
-    
+
     system("pause");
     return 0;
 }
