@@ -38,7 +38,7 @@ typedef struct chamados
 Chamados* InicializaListaChamado()
 {
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
-    aux->inicio = NULL; 
+    aux->inicio = NULL;
     return aux;
 }
 
@@ -87,7 +87,7 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
 
     aux->prox=anterior;
     return aux;
-} 
+}
 
 // Verifica se o código da solicitação já está cadastrado na lista.
 int CodigoSolicitacaoExiste(Chamados *lista, int codigo)
@@ -225,7 +225,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     while(prazo < 1 || prazo > 20);
 
     // Verifica a prioridade com base no prazo informado
-    if(prazo>=1 && prazo<=7) 
+    if(prazo>=1 && prazo<=7)
     {
         prioridade=1;
     }
@@ -237,12 +237,12 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     {
         prioridade=3;
     }
-    
+
 
     //Ao final da verificação, o programa utiliza a função de Criar o chamado
     anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
     OrdenaCodigosSolicitacao(anterior); // Mantém a lista em ordem crescente pelo código.
-    
+
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
     printf("\n Codigo do equipamento: %s", codEquip);
@@ -254,5 +254,26 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 
 }
 
+
+// CASE 0 - SAIR DO PROGRAMA
+//Descrição: Função de exclusão de lista de chamados.
+//Ações: apaga lista e finaliza o programa.
+//Saída: valor NULL.
+
+Chamados *LimparListaChamados(Chamados *listachamados)
+{
+    if(listachamados!=NULL)
+    {
+        Dados *aux;
+        while(listachamados->inicio!=NULL)
+        {
+            aux=listachamados->inicio;
+            listachamados->inicio=aux->prox;
+            free(aux);
+        }
+    }
+    free(listachamados);
+    return NULL;
+}
 
 #endif // FUNCOES_H_INCLUDED
