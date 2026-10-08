@@ -4,7 +4,7 @@
 /*
 
     Funções de Manipulação de Lista
-
+ 
 
 */
     typedef struct dados
@@ -22,21 +22,22 @@
         Período: (int)
 
         */
-    int codigoSolicitacao;
-    char codigoEquipamento[7];// uma casa a mais para "\0"
-    char nomeEquipamento[21];// uma casa a mais para "\0"
-    int prioridade;
-    int periodo;
+    int cod_s;
+    char cod_e[7];// uma casa a mais para "\0"
+    char nome[21];// uma casa a mais para "\0"
+    int prio;
+    int dias;
     struct dados *prox;
 }Dados;
 
 typedef struct chamados
 {
-   Dados *inicio;
+   No *Inicio;
 }Chamados;
 
-Chamados* InicializaListaChamado()
+Chamado* InicializaListaChamado()
 {
+<<<<<<< HEAD
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
     aux->inicio = NULL;
     return aux;
@@ -52,6 +53,9 @@ int QuantCod(int v) // Função para contar a quantidade de dígitos de um núme
         cont++;
     }
     return cont;
+=======
+    return NULL;
+>>>>>>> parent of edb338b (Implementa o cadastro de novos itens)
 }
 
 Chamados* ListaChamados()
@@ -62,32 +66,20 @@ Chamados* ListaChamados()
     return aux;
 }
 
-Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
+Dados* CriaChamado(Dados* anterior, int soli, char cequi[], char nequi[], int pri, int prazo)
 {
-    Dados* aux = (Dados*)malloc(sizeof(Dados));
-    aux->codigoSolicitacao=soli;
-    int i = 0;
-    while (codigoEquipamento[i] != '\0')
-    {
-        aux->codigoEquipamento[i] = codigoEquipamento[i];
-        i++;
-    }
-    aux->codigoEquipamento[i] = '\0';
-
-    i = 0;
-    while (nomeEquipamento[i] != '\0')
-    {
-        aux->nomeEquipamento[i] = nomeEquipamento[i];
-        i++;
-    }
-    aux->nomeEquipamento[i] = '\0';
-
-    aux->prioridade=prioridade;
-    aux->periodo=periodo;
+    Dados* aux;
+    aux=(Dados*)malloc(sizeof(Dados));
+    //aux->cod_s=soli;
+    //aux->cod_e=cequi; corrigir leiura de vetores
+    aux->nome=nequi;
+    aux->prio=pri;
+    aux->dias=prazo;
 
     aux->prox=anterior;
     return aux;
 }
+<<<<<<< HEAD
 
 // Confere se o código já existe e bloqueia códigos iguais
 int ExisteCodigo(Chamados *lista, int cod)
@@ -150,8 +142,34 @@ void InsereOrdenado(Chamados *lista, int soli, char codEquip[], char nomeEquip[]
     printf("\n Prazo do equipamento: %d", prazo);
     printf("\n\n");
     system("pause");
+=======
+
+void NovoChamado(Chamado *anterior)
+{
+     int cod;
+    printf("\n Codigo do chamado: ");
+    scanf("%d", &cod);
+    while(QuantCod(cod)!=4)
+    {
+        printf("\n Formato de codigo incorreto! Digite novamente o código;");
+        scanf("%d", &cod);
+    }
+    
+>>>>>>> parent of edb338b (Implementa o cadastro de novos itens)
 
 }
 
+
+int QuantCod(int v)
+{
+    int cont=0;
+
+    while(v>0)
+    {
+        v=v/10;
+        cont++;
+    }
+    return v;
+}
 
 #endif // FUNCOES_H_INCLUDED
