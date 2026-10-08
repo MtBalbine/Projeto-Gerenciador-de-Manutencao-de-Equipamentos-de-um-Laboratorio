@@ -424,6 +424,10 @@ void exibirOrdemManutencao(Chamados *lista)
         }
     }
 
+    // ===== AQUI: PAUSA =====
+    printf("\nPressione ENTER para voltar ao menu...");
+    getchar();
+
     // 4) Libera a auxiliar (NAO a principal)
     LimparListaChamados(aux);
 }
