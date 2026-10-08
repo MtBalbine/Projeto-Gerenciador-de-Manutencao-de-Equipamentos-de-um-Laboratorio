@@ -1,6 +1,8 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 
+#include <ctype.h> // Biblioteca para funções de manipulação de caracteres 
+
 /*
 
     Funções de Manipulação de Lista
@@ -54,40 +56,56 @@ int QuantCod(int v) // Função para contar a quantidade de dígitos de um núme
     return cont;
 }
 
-// Aceita somente três letras seguidas de três números.
-int CodigoEquipamentoValido(char codigo[])
+// Lê a linha inteira, validando três letras e três números e convertendo as letras para maiúsculas.
+int LerCodigoEquipamento(char codigo[])
 {
+    int caractere = getchar();
     int tamanho = 0;
-    while (codigo[tamanho] != '\0')
+    int valido = 1;
+
+    // Se o primeiro caractere lido for uma nova linha, lê o próximo caractere.
+    if (caractere == '\n')
     {
+        caractere = getchar();
+    }
+
+    // Lê os caracteres até encontrar EOF ou uma nova linha.
+    while (caractere != EOF && caractere != '\n')
+    {
+        if (tamanho < 6) // Verifica se ainda não atingiu o tamanho máximo do código (6 caracteres)
+        {
+            if (tamanho < 3) // Para os três primeiros caracteres, espera-se letras
+            {
+                if (isalpha((unsigned char)caractere))
+                {
+                    codigo[tamanho] = (char)toupper((unsigned char)caractere); // unsigned char = positivo, toupper = converte para maiúscula, 
+                }
+                else
+                {
+                    codigo[tamanho] = (char)caractere; // char = converte para caractere, caso não seja letra, mantém o caractere original
+                    valido = 0;
+                }
+            }
+            else
+            {
+                codigo[tamanho] = (char)caractere; // Para os três últimos caracteres, espera-se números
+                if (!isdigit((unsigned char)caractere)) // unsigned char = positivo, isdigit = verifica se é dígito
+                {
+                    valido = 0;
+                }
+            }
+        }
+        else
+        {
+            valido = 0;
+        }
+
         tamanho++;
+        caractere = getchar();
     }
 
-    if (tamanho != 6)
-    {
-        return 0;
-    }
-
-    // Os três primeiros caracteres devem ser letras.
-    for (int i = 0; i < 3; i++)
-    {
-        if (!((codigo[i] >= 'A' && codigo[i] <= 'Z') ||
-              (codigo[i] >= 'a' && codigo[i] <= 'z')))
-        {
-            return 0;
-        }
-    }
-
-    // Os três últimos caracteres devem ser números.
-    for (int i = 3; i < 6; i++)
-    {
-        if (codigo[i] < '0' || codigo[i] > '9')
-        {
-            return 0;
-        }
-    }
-
-    return 1;
+    codigo[6] = '\0';
+    return valido && tamanho == 6;
 }
 
 Chamados* ListaChamados()
@@ -210,11 +228,9 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     // Codigo do equipamento
     printf("\n Formato do codigo do equipamento: 3 letras e 3 digitos (ex: ABC123)");
     printf("\n Codigo do equipamento: ");
-    scanf("%6s", codEquip);
-    while (!CodigoEquipamentoValido(codEquip))
+    while (!LerCodigoEquipamento(codEquip)) // Lê o código do equipamento e valida o formato
     {
         printf("\n Codigo invalido! Digite 3 letras seguidas de 3 numeros (ex: ABC123): ");
-        scanf("%6s", codEquip);
     }
 
 

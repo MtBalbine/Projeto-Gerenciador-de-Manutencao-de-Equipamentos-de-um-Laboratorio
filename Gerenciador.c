@@ -5,7 +5,7 @@
 
 int main()
 {
-    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "portuguese");
 
     int opcao = 0;
 
