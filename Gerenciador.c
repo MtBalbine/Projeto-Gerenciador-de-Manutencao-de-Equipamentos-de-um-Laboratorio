@@ -66,6 +66,7 @@ int main()
 
             case 0:
                 printf("\nEncerrando o sistema...\n");
+                LimparListaChamados(lista);
                 break;
 
             default:
