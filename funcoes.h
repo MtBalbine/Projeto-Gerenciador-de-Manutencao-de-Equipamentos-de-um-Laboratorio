@@ -124,6 +124,15 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
         scanf("%d", &codSolic);
     }
 
+    //  Verificação de código repetido após a leitura do código
+    if(ExisteCodigo(anterior, codSolic))
+    {
+        printf("\n ERRO: Ja existe uma solicitacao cadastrada com o codigo %d!\n", codSolic);
+        printf(" Cancelando cadastro...\n\n");
+        system("pause");
+        return;
+    }
+
     // Codigo do equipamento
     printf("\n Formato do codigo do equipamento: 3 letras e 3 digitos (ex: ABC123)");
     printf("\n Codigo do equipamento: ");
