@@ -307,9 +307,8 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     
 
 
-    //Ao final da verificação, o programa utiliza a função de Criar o chamado
-    anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
-    OrdenaCodigosSolicitacao(anterior); // Mantém a lista em ordem crescente pelo código.
+     // Insere o chamado diretamente na posição correta pelo código.
+    InsereChamadoOrdenado(anterior, codSolic, codEquip, nomeEquip, prioridade, prazo);
 
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
