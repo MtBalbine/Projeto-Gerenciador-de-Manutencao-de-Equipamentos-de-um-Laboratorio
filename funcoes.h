@@ -5,10 +5,16 @@
 #include <string.h> // Biblioteca para funções de manipulação de strings
 
 /*
+    Funções de Manipulação de Lista:
+    - InicializaListaChamado        alocam uma lista vazia.
+    - CriaChamado                   aloca e preenche um nó, ligando-o ao início atual.
+    - CodigoSolicitacaoExiste       percorre a lista para localizar um código.
+    - OrdenaCodigosSolicitacao      reorganiza os nós em ordem crescente de código.
+    - NovoChamado                   coleta e valida os dados, insere o nó e mantém a lista ordenada.
 
-    Funções de Manipulação de Lista
-
-
+    Funções auxiliares do cadastro:
+    - QuantCod                      conta os dígitos do código da solicitação.
+    - LerCodigoEquipamento          valida o formato do código do equipamento.
 */
     typedef struct dados
 {
@@ -38,6 +44,7 @@ typedef struct chamados
    Dados *inicio;
 }Chamados;
 
+// Cria uma lista vazia de chamados.
 Chamados* InicializaListaChamado()
 {
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
@@ -45,7 +52,8 @@ Chamados* InicializaListaChamado()
     return aux;
 }
 
-int QuantCod(int v) // Função para contar a quantidade de dígitos de um número inteiro
+// Conta os dígitos de um código positivo de solicitação.
+int QuantCod(int v)
 {
     int cont=0;
 
@@ -109,6 +117,7 @@ int LerCodigoEquipamento(char codigo[])
     return valido && tamanho == 6;
 }
 
+// Cria e retorna outra lista vazia de chamados.
 Chamados* ListaChamados()
 {
     Chamados *aux;
@@ -117,10 +126,12 @@ Chamados* ListaChamados()
     return aux;
 }
 
+// Aloca um nó, preenche seus dados e o liga antes do nó recebido.
 Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
 {
     Dados* aux = (Dados*)malloc(sizeof(Dados));
     aux->codigoSolicitacao=soli;
+    // Copia o código do equipamento para o novo nó, incluindo o terminador da string.
     int i = 0;
     while (codigoEquipamento[i] != '\0')
     {
@@ -129,6 +140,7 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
     }
     aux->codigoEquipamento[i] = '\0';
 
+    // Copia o nome do equipamento para o novo nó, incluindo o terminador da string.
     i = 0;
     while (nomeEquipamento[i] != '\0')
     {
@@ -167,6 +179,7 @@ void OrdenaCodigosSolicitacao(Chamados *lista)
     Dados *atual = lista->inicio;
     Dados *ordenada = NULL;
 
+    // Retira cada nó da lista original e o encaixa na posição ordenada.
     while (atual != NULL)
     {
         Dados *proximo = atual->prox;
@@ -204,7 +217,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     char codEquip[7];
     char nomeEquip[21];
 
-    // Solicita ao usuário o código do chamado e verifica se possui 4 dígitos
+    // Solicita o código da solicitação e exige que ele tenha quatro dígitos.
     printf("\n Formato do codigo do chamado: 4 digitos (ex: 1234)");
     printf("\n Codigo do chamado: ");
     scanf("%d", &codSolic);
@@ -226,7 +239,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
         }
     }
 
-    // Codigo do equipamento
+    // Solicita o código do equipamento e repete a leitura até validar o formato.
     printf("\n Formato do codigo do equipamento: 3 letras e 3 digitos (ex: ABC123)");
     printf("\n Codigo do equipamento: ");
     while (!LerCodigoEquipamento(codEquip)) // Lê o código do equipamento e valida o formato
@@ -235,7 +248,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     }
 
 
-    // Nome do equipamento, usuario pode digitar menos que 20 caracteres
+    // Lê o nome com limite de tamanho para não ultrapassar o vetor.
     printf("\n Formato do nome do equipamento: até 20 caracteres (ex: Microscópio)");
     int tamanhoNome;
     do
@@ -246,6 +259,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
             return;
         }
 
+        // Mede o nome para validar o limite de 20 caracteres.
         tamanhoNome = (int)strlen(nomeEquip);
 
         // Remove a quebra de linha; se exceder o campo, descarta o restante da linha.
@@ -305,7 +319,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
            (prioridade == 3 && prazo > 20));
     
 
-    //Ao final da verificação, o programa utiliza a função de Criar o chamado
+    // Cria o chamado, insere-o na lista e restaura a ordem pelo código.
     anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
     OrdenaCodigosSolicitacao(anterior); // Mantém a lista em ordem crescente pelo código.
 
