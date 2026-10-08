@@ -155,7 +155,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 
 
     // Nome do equipamento, usuario pode digitar menos que 20 caracteres
-    printf("\n Formato do nome do equipamento: até 20 caracteres (ex: Microscópio)");
+    printf("\n Formato do nome do equipamento: ate 20 caracteres (ex: Microscopio)");
     printf("\n Nome do equipamento: ");
     scanf(" %[^\n]s", nomeEquip);
     int tamanhoNome = 0;
