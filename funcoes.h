@@ -1,41 +1,43 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 
-/*
+//Funções de Manipulação de Lista
 
-    Funções de Manipulação de Lista
- 
-
-*/
-    typedef struct dados
+typedef struct      // Struct que guarda os dados do equipamento
 {
+    int codSolicitacao;     // 4 dígitos 
+    char codEquipamento[7];     // 3 dígitos + '\0'
+    char nome[21];      // máx 20 caracteres + '\0'
+    int prioridade;      // 1, 2 e 3
+    int periodo;         // em dias
+}Equipamento;
 
-     /*
-        Codigo da solicitação: (int 4 caracteres)
-
-        Código do Equipamento: (string 3 caracteres; 3 numeros)
-
-        Nome do equipamento: (string - 20 caracteres (MAX))
-
-        Prioridade: (int de 1 a 3)
-
-        Período: (int)
-
-        */
-    int cod_s;
-    char cod_e[7];// uma casa a mais para "\0"
-    char nome[21];// uma casa a mais para "\0"
-    int prio;
-    int dias;
-    struct dados *prox;
-}Dados;
+typedef struct No       // Nó da lista encadeada
+{
+    Equipamento dados;
+    struct No *prox;
+} No;
 
 typedef struct chamados
 {
-   No *Inicio;
+    No *inicio;     // aponta para o nó cabeça
 }Chamados;
 
-Chamado* InicializaListaChamado()
+// Prototypes (avisa ao compilador que as funções existem) 
+Chamados* criarLista(void);     
+void      liberarLista(Chamados *anterior);
+int       QuantCod(int v);
+int       validarCodEquipamento(const char *s);
+int       codigoExiste(Chamados *anterior, int cod);
+void      inserirOrdenado(Chamados *anterior, Equipamento eq);
+void      NovoChamado(Chamados *anterior);
+void      removerChamado(Chamados *anterior);
+void      consultarChamado(Chamados *anterior);
+void      alterarChamado(Chamados *anterior);
+void      exibirOrdemManutencao(Chamados *anterior);
+void      exibirTodas(Chamados *anterior);
+
+Chamados* InicializaListaChamado()
 {
     return NULL;
 }
@@ -48,23 +50,44 @@ Chamados* ListaChamados()
     return aux;
 }
 
-Dados* CriaChamado(Dados* anterior, int soli, char cequi[], char nequi[], int pri, int prazo)
+Equipamento* CriaChamado(Equipamento* anterior, int soli, char cequi[], char nequi[], int pri, int prazo)
 {
-    Dados* aux;
-    aux=(Dados*)malloc(sizeof(Dados));
-    //aux->cod_s=soli;
-    //aux->cod_e=cequi; corrigir leiura de vetores
-    aux->nome=nequi;
-    aux->prio=pri;
-    aux->dias=prazo;
+    Equipamento* aux;
+    aux=(Equipamento*)malloc(sizeof(Equipamento));
+    aux->codSolicitacao=soli;
+    aux->codEquipamento=cequi; corrigir leiura de vetores
+    strcpy(aux->nome, nequi);
+    aux->prioridade=pri;
+    aux->periodo=prazo;
 
     aux->prox=anterior;
     return aux;
 }
 
-void NovoChamado(Chamado *anterior)
+void NovoChamado(Chamados *anterior)
 {
+    int cod;
+    printf("\n Codigo do chamado: ");
+    scanf("%d", &cod);
+    while(QuantCod(cod)!=4)
+    {
+        printf("\n Formato de codigo incorreto! Digite novamente o código;");
+        scanf("%d", &cod);
+    }
 
+}
+
+
+int QuantCod(int v)
+{
+    int cont=0;
+
+    while(v>0)
+    {
+        v=v/10;
+        cont++;
+    }
+    return v;
 }
 
 #endif // FUNCOES_H_INCLUDED
