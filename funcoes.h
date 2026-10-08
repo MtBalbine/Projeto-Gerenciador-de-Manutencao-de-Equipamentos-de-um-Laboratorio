@@ -2,6 +2,7 @@
 #define FUNCOES_H_INCLUDED
 
 #include <ctype.h> // Biblioteca para funções de manipulação de caracteres 
+#include <string.h> // Biblioteca para funções de manipulação de strings
 
 /*
 
@@ -236,23 +237,41 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 
     // Nome do equipamento, usuario pode digitar menos que 20 caracteres
     printf("\n Formato do nome do equipamento: até 20 caracteres (ex: Microscópio)");
-    printf("\n Nome do equipamento: ");
-    scanf(" %[^\n]s", nomeEquip);
-    int tamanhoNome = 0;
-    while (nomeEquip[tamanhoNome] != '\0')
+    int tamanhoNome;
+    do
     {
-        tamanhoNome++;
-    }
-    while(tamanhoNome>20)
-    {
-        printf("\n Formato de nome incorreto! Digite novamente o nome;");
-        scanf(" %[^\n]s", nomeEquip);
-        tamanhoNome = 0;
-        while (nomeEquip[tamanhoNome] != '\0')
+        printf("\n Nome do equipamento: ");
+        if (fgets(nomeEquip, sizeof(nomeEquip), stdin) == NULL) // fgets= le nome equipe, sizeof= tamanho do nome, stdin= entrada padrão
         {
-            tamanhoNome++;
+            return;
+        }
+
+        tamanhoNome = (int)strlen(nomeEquip);
+
+        // Remove a quebra de linha; se exceder o campo, descarta o restante da linha.
+        if (tamanhoNome > 0 && nomeEquip[tamanhoNome - 1] == '\n')
+        {
+            nomeEquip[--tamanhoNome] = '\0';
+        }
+        else if (tamanhoNome == 20)
+        {
+            int caractere = getchar();
+            if (caractere != '\n' && caractere != EOF)
+            {
+                while (caractere != '\n' && caractere != EOF)
+                {
+                    caractere = getchar();
+                }
+                tamanhoNome++;
+            }
+        }
+
+        if (tamanhoNome == 0 || tamanhoNome > 20)
+        {
+            printf("\n Formato de nome incorreto! Digite novamente o nome (ate 20 caracteres).\n");
         }
     }
+    while (tamanhoNome == 0 || tamanhoNome > 20);
 
     // Solicita e valida o nível de prioridade escolhido pelo usuário.
     do
