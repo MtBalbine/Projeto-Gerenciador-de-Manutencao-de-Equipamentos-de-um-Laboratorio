@@ -4,7 +4,7 @@
 /*
 
     Funções de Manipulação de Lista
- 
+
 
 */
     typedef struct dados
@@ -22,24 +22,23 @@
         Período: (int)
 
         */
-    int cod_s;
-    char cod_e[7];// uma casa a mais para "\0"
-    char nome[21];// uma casa a mais para "\0"
-    int prio;
-    int dias;
+    int codigoSolicitacao;
+    char codigoEquipamento[7];// uma casa a mais para "\0"
+    char nomeEquipamento[21];// uma casa a mais para "\0"
+    int prioridade;
+    int periodo;
     struct dados *prox;
 }Dados;
 
 typedef struct chamados
 {
-   No *Inicio;
+   Dados *inicio;
 }Chamados;
 
-Chamado* InicializaListaChamado()
+Chamados* InicializaListaChamado()
 {
-<<<<<<< HEAD
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
-    aux->inicio = NULL;
+    aux->inicio = NULL; 
     return aux;
 }
 
@@ -53,9 +52,6 @@ int QuantCod(int v) // Função para contar a quantidade de dígitos de um núme
         cont++;
     }
     return cont;
-=======
-    return NULL;
->>>>>>> parent of edb338b (Implementa o cadastro de novos itens)
 }
 
 Chamados* ListaChamados()
@@ -66,74 +62,122 @@ Chamados* ListaChamados()
     return aux;
 }
 
-Dados* CriaChamado(Dados* anterior, int soli, char cequi[], char nequi[], int pri, int prazo)
+Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
 {
-    Dados* aux;
-    aux=(Dados*)malloc(sizeof(Dados));
-    //aux->cod_s=soli;
-    //aux->cod_e=cequi; corrigir leiura de vetores
-    aux->nome=nequi;
-    aux->prio=pri;
-    aux->dias=prazo;
+    Dados* aux = (Dados*)malloc(sizeof(Dados));
+    aux->codigoSolicitacao=soli;
+    int i = 0;
+    while (codigoEquipamento[i] != '\0')
+    {
+        aux->codigoEquipamento[i] = codigoEquipamento[i];
+        i++;
+    }
+    aux->codigoEquipamento[i] = '\0';
+
+    i = 0;
+    while (nomeEquipamento[i] != '\0')
+    {
+        aux->nomeEquipamento[i] = nomeEquipamento[i];
+        i++;
+    }
+    aux->nomeEquipamento[i] = '\0';
+
+    aux->prioridade=prioridade;
+    aux->periodo=periodo;
 
     aux->prox=anterior;
     return aux;
-}
-<<<<<<< HEAD
+} 
 
-// Confere se o código já existe e bloqueia códigos iguais
-int ExisteCodigo(Chamados *lista, int cod)
+
+
+void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 {
-    Dados *atual = lista -> inicio;
-    while(atual != NULL)
+    int codSolic, prioridade, prazo;
+    char codEquip[7];
+    char nomeEquip[21];
+
+    // Solicita ao usuário o código do chamado e verifica se possui 4 dígitos
+    printf("\n Formato do codigo do chamado: 4 digitos (ex: 1234)");
+    printf("\n Codigo do chamado: ");
+    scanf("%d", &codSolic);
+    while(QuantCod(codSolic)!=4)
     {
-        if(atual -> codigoSolicitacao == cod)
-        {
-            return 1;
-            atual = atual -> prox;
-        }
-        return 0;
+        printf("\n Formato de codigo incorreto! Digite novamente o código;");
+        scanf("%d", &codSolic);
     }
-}
 
-// Insere o chamado ordenado pelo código
-void InsereOrdenado(Chamados *lista, int soli, char codEquip[], char nomeEquip[], int prioridade, int periodo)
-{
-    Dados* novo = (Dados*)malloc(sizeof(Dados));
-    novo -> codSolicitacao = soli;
-
-    int i = 0;
-    while(codEquip[i] != '\0')
+    // Codigo do equipamento
+    printf("\n Formato do codigo do equipamento: 3 letras e 3 digitos (ex: ABC123)");
+    printf("\n Codigo do equipamento: ");
+    scanf("%s", codEquip);
+    int tamanhoCodigo = 0;
+    while (codEquip[tamanhoCodigo] != '\0')
     {
-        novo->codigoEquipamento[i] = codEquip[i]; i++;
+        tamanhoCodigo++;
     }
-        novo->codigoEquipamento[i] = '\0';
-        i = 0;
-        while (nomeEquip[i] != '\0')
+    while(tamanhoCodigo!=6)
+    {
+        printf("\n Formato de codigo incorreto! Digite novamente o código;");
+        scanf("%s", codEquip);
+        tamanhoCodigo = 0;
+        while (codEquip[tamanhoCodigo] != '\0')
         {
-            novo->nomeEquipamento[i] = nomeEquip[i]; i++;
+            tamanhoCodigo++;
         }
-        novo->nomeEquipamento[i] = '\0';
-    novo->prioridade = prioridade;
-    novo->periodo = periodo;
-    novo->prox = NULL;
+    }
 
-    if (lista->inicio == NULL || lista->inicio->codigoSolicitacao > soli)
-        {
-        novo->prox = lista->inicio;
-        lista->inicio = novo;
-        }
-    else
-        {
-            Dados *atual = lista->inicio;
-            while (atual->prox != NULL && atual->prox->codigoSolicitacao < soli)
-            {
-                atual = atual->prox;
-            }
-            novo->prox = atual->prox;
-            atual->prox = novo;
-        }
 
+    // Nome do equipamento, usuario pode digitar menos que 20 caracteres
+    printf("\n Formato do nome do equipamento: até 20 caracteres (ex: Microscópio)");
+    printf("\n Nome do equipamento: ");
+    scanf(" %[^\n]s", nomeEquip);
+    int tamanhoNome = 0;
+    while (nomeEquip[tamanhoNome] != '\0')
+    {
+        tamanhoNome++;
+    }
+    while(tamanhoNome>20)
+    {
+        printf("\n Formato de nome incorreto! Digite novamente o nome;");
+        scanf(" %[^\n]s", nomeEquip);
+        tamanhoNome = 0;
+        while (nomeEquip[tamanhoNome] != '\0')
+        {
+            tamanhoNome++;
+        }
+    }
+
+    /*Prioridade
+     Prioridade 1 → período entre 1 e 7 dias
+     Prioridade 2 → período entre 1 e 15 dias
+     Prioridade 3 → período entre 1 e 20 dias. */
+    do
+    {
+        printf("\n Formato do prazo: entre 1 e 20 dias");
+        printf("\n quantos dias o equipamento fica parado: ");
+        scanf("%d", &prazo);
+    }
+    while(prazo < 1 || prazo > 20);
+
+    // Verifica a prioridade com base no prazo informado
+    if(prazo>=1 && prazo<=7) 
+    {
+        prioridade=1;
+    }
+    if(prazo>=8 && prazo<=15)
+    {
+        prioridade=2;
+    }
+    if(prazo>=16 && prazo<=20)
+    {
+        prioridade=3;
+    }
+    
+
+    //Ao final da verificação, o programa utiliza a função de Criar o chamado
+    anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
+    
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
     printf("\n Codigo do equipamento: %s", codEquip);
@@ -142,34 +186,8 @@ void InsereOrdenado(Chamados *lista, int soli, char codEquip[], char nomeEquip[]
     printf("\n Prazo do equipamento: %d", prazo);
     printf("\n\n");
     system("pause");
-=======
-
-void NovoChamado(Chamado *anterior)
-{
-     int cod;
-    printf("\n Codigo do chamado: ");
-    scanf("%d", &cod);
-    while(QuantCod(cod)!=4)
-    {
-        printf("\n Formato de codigo incorreto! Digite novamente o código;");
-        scanf("%d", &cod);
-    }
-    
->>>>>>> parent of edb338b (Implementa o cadastro de novos itens)
 
 }
 
-
-int QuantCod(int v)
-{
-    int cont=0;
-
-    while(v>0)
-    {
-        v=v/10;
-        cont++;
-    }
-    return v;
-}
 
 #endif // FUNCOES_H_INCLUDED
