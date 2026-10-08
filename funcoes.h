@@ -1,11 +1,20 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 
+#include <ctype.h> // Biblioteca para funções de manipulação de caracteres 
+#include <string.h> // Biblioteca para funções de manipulação de strings
+
 /*
+    Funções de Manipulação de Lista:
+    - InicializaListaChamado        alocam uma lista vazia.
+    - CriaChamado                   aloca e preenche um nó.
+    - CodigoSolicitacaoExiste       percorre a lista para localizar um código.
+    - InsereChamadoOrdenado         insere o novo nó na posição correta pelo código.
+    - NovoChamado                   coleta e valida os dados antes de inserir.
 
-    Funções de Manipulação de Lista
-
-
+    Funções auxiliares do cadastro:
+    - QuantCod                      conta os dígitos do código da solicitação.
+    - LerCodigoEquipamento          valida o formato do código do equipamento.
 */
     typedef struct dados
 {
@@ -35,6 +44,7 @@ typedef struct chamados
    Dados *inicio;
 }Chamados;
 
+// Cria uma lista vazia de chamados.
 Chamados* InicializaListaChamado()
 {
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
@@ -42,7 +52,8 @@ Chamados* InicializaListaChamado()
     return aux;
 }
 
-int QuantCod(int v) // Função para contar a quantidade de dígitos de um número inteiro
+// Conta os dígitos de um código positivo de solicitação.
+int QuantCod(int v)
 {
     int cont=0;
 
@@ -54,42 +65,59 @@ int QuantCod(int v) // Função para contar a quantidade de dígitos de um núme
     return cont;
 }
 
-// Aceita somente três letras seguidas de três números.
-int CodigoEquipamentoValido(char codigo[])
+// Lê a linha inteira, validando três letras e três números e convertendo as letras para maiúsculas.
+int LerCodigoEquipamento(char codigo[])
 {
+    int caractere = getchar();
     int tamanho = 0;
-    while (codigo[tamanho] != '\0')
+    int valido = 1;
+
+    // Se o primeiro caractere lido for uma nova linha, lê o próximo caractere.
+    if (caractere == '\n')
     {
+        caractere = getchar();
+    }
+
+    // Lê os caracteres até encontrar EOF ou uma nova linha.
+    while (caractere != EOF && caractere != '\n')
+    {
+        if (tamanho < 6) // Verifica se ainda não atingiu o tamanho máximo do código (6 caracteres)
+        {
+            if (tamanho < 3) // Para os três primeiros caracteres, espera-se letras
+            {
+                if (isalpha((unsigned char)caractere))
+                {
+                    codigo[tamanho] = (char)toupper((unsigned char)caractere); // unsigned char = positivo, toupper = converte para maiúscula, 
+                }
+                else
+                {
+                    codigo[tamanho] = (char)caractere; // char = converte para caractere, caso não seja letra, mantém o caractere original
+                    valido = 0;
+                }
+            }
+            else
+            {
+                codigo[tamanho] = (char)caractere; // Para os três últimos caracteres, espera-se números
+                if (!isdigit((unsigned char)caractere)) // unsigned char = positivo, isdigit = verifica se é dígito
+                {
+                    valido = 0;
+                }
+            }
+        }
+        else
+        {
+            valido = 0;
+        }
+
         tamanho++;
+        caractere = getchar();
     }
 
-    if (tamanho != 6)
-    {
-        return 0;
-    }
-
-    // Os três primeiros caracteres devem ser letras.
-    for (int i = 0; i < 3; i++)
-    {
-        if (!((codigo[i] >= 'A' && codigo[i] <= 'Z') ||
-              (codigo[i] >= 'a' && codigo[i] <= 'z')))
-        {
-            return 0;
-        }
-    }
-
-    // Os três últimos caracteres devem ser números.
-    for (int i = 3; i < 6; i++)
-    {
-        if (codigo[i] < '0' || codigo[i] > '9')
-        {
-            return 0;
-        }
-    }
-
-    return 1;
+    codigo[6] = '\0';
+    return valido && tamanho == 6;
 }
 
+// Cria e retorna outra lista vazia de chamados.
 Chamados* ListaChamados()
 {
     Chamados *aux;
@@ -98,10 +126,12 @@ Chamados* ListaChamados()
     return aux;
 }
 
-Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
+// Aloca e preenche um nó, apontando-o para o próximo nó informado.
+Dados* CriaChamado(Dados* proximo, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
 {
     Dados* aux = (Dados*)malloc(sizeof(Dados));
     aux->codigoSolicitacao=soli;
+    // Copia o código do equipamento para o novo nó, incluindo o terminador da string.
     int i = 0;
     while (codigoEquipamento[i] != '\0')
     {
@@ -110,6 +140,7 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
     }
     aux->codigoEquipamento[i] = '\0';
 
+    // Copia o nome do equipamento para o novo nó, incluindo o terminador da string.
     i = 0;
     while (nomeEquipamento[i] != '\0')
     {
@@ -121,7 +152,7 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
     aux->prioridade=prioridade;
     aux->periodo=periodo;
 
-    aux->prox=anterior;
+    aux->prox=proximo;
     return aux;
 }
 
@@ -142,39 +173,27 @@ int CodigoSolicitacaoExiste(Chamados *lista, int codigo)
     return 0;
 }
 
-// Reorganiza os nós da lista em ordem crescente, sem vetor ou ponteiro duplo.
-void OrdenaCodigosSolicitacao(Chamados *lista)
+// Insere o chamado diretamente na posição crescente do código de solicitação.
+void InsereChamadoOrdenado(Chamados *lista, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
 {
+    Dados *anterior = NULL;
     Dados *atual = lista->inicio;
-    Dados *ordenada = NULL;
 
-    while (atual != NULL)
+    while (atual != NULL && atual->codigoSolicitacao < soli)
     {
-        Dados *proximo = atual->prox;
-
-        // Insere o nó atual na posição correta da lista já ordenada.
-        if (ordenada == NULL || atual->codigoSolicitacao < ordenada->codigoSolicitacao)
-        {
-            atual->prox = ordenada;
-            ordenada = atual;
-        }
-        else
-        {
-            Dados *posicao = ordenada;
-            while (posicao->prox != NULL &&
-                   posicao->prox->codigoSolicitacao < atual->codigoSolicitacao)
-            {
-                posicao = posicao->prox;
-            }
-
-            atual->prox = posicao->prox;
-            posicao->prox = atual;
-        }
-
-        atual = proximo;
+        anterior = atual;
+        atual = atual->prox;
     }
 
-    lista->inicio = ordenada;
+    Dados *novo = CriaChamado(atual, soli, codigoEquipamento, nomeEquipamento, prioridade, periodo);
+    if (anterior == NULL)
+    {
+        lista->inicio = novo;
+    }
+    else
+    {
+        anterior->prox = novo;
+    }
 }
 
 
@@ -185,7 +204,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     char codEquip[7];
     char nomeEquip[21];
 
-    // Solicita ao usuário o código do chamado e verifica se possui 4 dígitos
+    // Solicita o código da solicitação e exige que ele tenha quatro dígitos.
     printf("\n Formato do codigo do chamado: 4 digitos (ex: 1234)");
     printf("\n Codigo do chamado: ");
     scanf("%d", &codSolic);
@@ -207,36 +226,53 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
         }
     }
 
-    // Codigo do equipamento
+    // Solicita o código do equipamento e repete a leitura até validar o formato.
     printf("\n Formato do codigo do equipamento: 3 letras e 3 digitos (ex: ABC123)");
     printf("\n Codigo do equipamento: ");
-    scanf("%6s", codEquip);
-    while (!CodigoEquipamentoValido(codEquip))
+    while (!LerCodigoEquipamento(codEquip)) // Lê o código do equipamento e valida o formato
     {
         printf("\n Codigo invalido! Digite 3 letras seguidas de 3 numeros (ex: ABC123): ");
-        scanf("%6s", codEquip);
     }
 
 
-    // Nome do equipamento, usuario pode digitar menos que 20 caracteres
+    // Lê o nome com limite de tamanho para não ultrapassar o vetor.
     printf("\n Formato do nome do equipamento: até 20 caracteres (ex: Microscópio)");
-    printf("\n Nome do equipamento: ");
-    scanf(" %[^\n]s", nomeEquip);
-    int tamanhoNome = 0;
-    while (nomeEquip[tamanhoNome] != '\0')
+    int tamanhoNome;
+    do
     {
-        tamanhoNome++;
-    }
-    while(tamanhoNome>20)
-    {
-        printf("\n Formato de nome incorreto! Digite novamente o nome;");
-        scanf(" %[^\n]s", nomeEquip);
-        tamanhoNome = 0;
-        while (nomeEquip[tamanhoNome] != '\0')
+        printf("\n Nome do equipamento: ");
+        if (fgets(nomeEquip, sizeof(nomeEquip), stdin) == NULL) // fgets= le nome equipe, sizeof= tamanho do nome, stdin= entrada padrão
         {
-            tamanhoNome++;
+            return;
+        }
+
+        // Mede o nome para validar o limite de 20 caracteres.
+        tamanhoNome = (int)strlen(nomeEquip);
+
+        // Remove a quebra de linha; se exceder o campo, descarta o restante da linha.
+        if (tamanhoNome > 0 && nomeEquip[tamanhoNome - 1] == '\n')
+        {
+            nomeEquip[--tamanhoNome] = '\0';
+        }
+        else if (tamanhoNome == 20)
+        {
+            int caractere = getchar();
+            if (caractere != '\n' && caractere != EOF)
+            {
+                while (caractere != '\n' && caractere != EOF)
+                {
+                    caractere = getchar();
+                }
+                tamanhoNome++;
+            }
+        }
+
+        if (tamanhoNome == 0 || tamanhoNome > 20)
+        {
+            printf("\n Formato de nome incorreto! Digite novamente o nome (ate 20 caracteres).\n");
         }
     }
+    while (tamanhoNome == 0 || tamanhoNome > 20);
 
     // Solicita e valida o nível de prioridade escolhido pelo usuário.
     do
