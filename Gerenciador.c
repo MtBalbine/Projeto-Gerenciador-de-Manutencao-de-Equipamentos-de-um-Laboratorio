@@ -13,12 +13,15 @@ int main()
 
     do
     {
+        system ("cls");
+
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
         printf("1 - Novo chamado\n"); // matheus finalizar
-        printf("2 - Listar chamados\n"); // lele
+        printf("2 - Lista   r chamados\n"); // lele
         printf("3 - Buscar chamado\n"); // ju
-        printf("4 - Atualizar chamado\n"); //matheus
-        printf("5 - Excluir chamado\n"); // so
+        printf("4 - Alterar a prioridade e/ou período de uma Solicitação");
+        printf("5 - Atualizar chamado\n"); //matheus
+        printf("6 - Excluir chamado\n"); // so
         printf("0 - Sair\n"); // so
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -46,12 +49,16 @@ int main()
                 break;
 
             case 4:
+                //Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
+                //respeitando os limites do período associado a nova prioridade.
+
+            case 5:
                 // Funcao da biblioteca: atualizar chamado
                 // Permite alterar prioridade, prazo, nome do equipamento ou status.
                 // Deve buscar o registro antes de modificar.
                 break;
 
-            case 5:
+            case 6:
                 // Funcao da biblioteca: excluir chamado
                 // Remove o chamado da lista de manutencao.
                 // Pode ser por codigo da solicitacao ou codigo do equipamento.

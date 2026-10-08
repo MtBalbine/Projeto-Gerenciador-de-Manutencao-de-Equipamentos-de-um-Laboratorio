@@ -54,6 +54,42 @@ int QuantCod(int v) // Função para contar a quantidade de dígitos de um núme
     return cont;
 }
 
+// Aceita somente três letras seguidas de três números.
+int CodigoEquipamentoValido(char codigo[])
+{
+    int tamanho = 0;
+    while (codigo[tamanho] != '\0')
+    {
+        tamanho++;
+    }
+
+    if (tamanho != 6)
+    {
+        return 0;
+    }
+
+    // Os três primeiros caracteres devem ser letras.
+    for (int i = 0; i < 3; i++)
+    {
+        if (!((codigo[i] >= 'A' && codigo[i] <= 'Z') ||
+              (codigo[i] >= 'a' && codigo[i] <= 'z')))
+        {
+            return 0;
+        }
+    }
+
+    // Os três últimos caracteres devem ser números.
+    for (int i = 3; i < 6; i++)
+    {
+        if (codigo[i] < '0' || codigo[i] > '9')
+        {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
 Chamados* ListaChamados()
 {
     Chamados *aux;
@@ -174,21 +210,11 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     // Codigo do equipamento
     printf("\n Formato do codigo do equipamento: 3 letras e 3 digitos (ex: ABC123)");
     printf("\n Codigo do equipamento: ");
-    scanf("%s", codEquip);
-    int tamanhoCodigo = 0;
-    while (codEquip[tamanhoCodigo] != '\0')
+    scanf("%6s", codEquip);
+    while (!CodigoEquipamentoValido(codEquip))
     {
-        tamanhoCodigo++;
-    }
-    while(tamanhoCodigo!=6)
-    {
-        printf("\n Formato de codigo incorreto! Digite novamente o código;");
-        scanf("%s", codEquip);
-        tamanhoCodigo = 0;
-        while (codEquip[tamanhoCodigo] != '\0')
-        {
-            tamanhoCodigo++;
-        }
+        printf("\n Codigo invalido! Digite 3 letras seguidas de 3 numeros (ex: ABC123): ");
+        scanf("%6s", codEquip);
     }
 
 
@@ -212,31 +238,36 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
         }
     }
 
-    /*Prioridade
-     Prioridade 1 → período entre 1 e 7 dias
-     Prioridade 2 → período entre 1 e 15 dias
-     Prioridade 3 → período entre 1 e 20 dias. */
+    // Solicita e valida o nível de prioridade escolhido pelo usuário.
     do
     {
-        printf("\n Formato do prazo: entre 1 e 20 dias");
-        printf("\n quantos dias o equipamento fica parado: ");
+        printf("\n Prioridade (1, 2 ou 3): ");
+        scanf("%d", &prioridade);
+    }
+    while (prioridade < 1 || prioridade > 3);
+
+    // Solicita o prazo até que ele esteja dentro do período da prioridade escolhida.
+    do
+    {
+        if (prioridade == 1)
+        {
+            printf("\n Prazo para prioridade 1: de 1 a 7 dias");
+        }
+        if (prioridade == 2)
+        {
+            printf("\n Prazo para prioridade 2: de 1 a 15 dias");
+        }
+        if (prioridade == 3)
+        {
+            printf("\n Prazo para prioridade 3: de 1 a 20 dias");
+        }
+        printf("\n Quantos dias o equipamento fica parado: ");
         scanf("%d", &prazo);
     }
-    while(prazo < 1 || prazo > 20);
-
-    // Verifica a prioridade com base no prazo informado
-    if(prazo>=1 && prazo<=7) 
-    {
-        prioridade=1;
-    }
-    if(prazo>=8 && prazo<=15)
-    {
-        prioridade=2;
-    }
-    if(prazo>=16 && prazo<=20)
-    {
-        prioridade=3;
-    }
+    while (prazo < 1 ||
+           (prioridade == 1 && prazo > 7) ||
+           (prioridade == 2 && prazo > 15) ||
+           (prioridade == 3 && prazo > 20));
     
 
     //Ao final da verificação, o programa utiliza a função de Criar o chamado
