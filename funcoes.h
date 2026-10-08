@@ -38,7 +38,7 @@ typedef struct chamados
 Chamados* InicializaListaChamado()
 {
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
-    aux->inicio = NULL; 
+    aux->inicio = NULL;
     return aux;
 }
 
@@ -87,97 +87,61 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
 
     aux->prox=anterior;
     return aux;
-} 
+}
 
-
-
-void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
+// Confere se o código já existe e bloqueia códigos iguais
+int ExisteCodigo(Chamados *lista, int cod)
 {
-    int codSolic, prioridade, prazo;
-    char codEquip[7];
-    char nomeEquip[21];
-
-    // Solicita ao usuário o código do chamado e verifica se possui 4 dígitos
-    printf("\n Formato do codigo do chamado: 4 digitos (ex: 1234)");
-    printf("\n Codigo do chamado: ");
-    scanf("%d", &codSolic);
-    while(QuantCod(codSolic)!=4)
+    Dados *atual = lista -> inicio;
+    while(atual != NULL)
     {
-        printf("\n Formato de codigo incorreto! Digite novamente o código;");
-        scanf("%d", &codSolic);
-    }
-
-    // Codigo do equipamento
-    printf("\n Formato do codigo do equipamento: 3 letras e 3 digitos (ex: ABC123)");
-    printf("\n Codigo do equipamento: ");
-    scanf("%s", codEquip);
-    int tamanhoCodigo = 0;
-    while (codEquip[tamanhoCodigo] != '\0')
-    {
-        tamanhoCodigo++;
-    }
-    while(tamanhoCodigo!=6)
-    {
-        printf("\n Formato de codigo incorreto! Digite novamente o código;");
-        scanf("%s", codEquip);
-        tamanhoCodigo = 0;
-        while (codEquip[tamanhoCodigo] != '\0')
+        if(atual -> codigoSolicitacao == cod)
         {
-            tamanhoCodigo++;
+            return 1;
+            atual = atual -> prox;
         }
+        return 0;
     }
+}
 
+// Insere o chamado ordenado pelo código
+void InsereOrdenado(Chamados *lista, int soli, char codEquip[], char nomeEquip[], int prioridade, int periodo)
+{
+    Dados* novo = (Dados*)malloc(sizeof(Dados));
+    novo -> codSolicitacao = soli;
 
-    // Nome do equipamento, usuario pode digitar menos que 20 caracteres
-    printf("\n Formato do nome do equipamento: até 20 caracteres (ex: Microscópio)");
-    printf("\n Nome do equipamento: ");
-    scanf(" %[^\n]s", nomeEquip);
-    int tamanhoNome = 0;
-    while (nomeEquip[tamanhoNome] != '\0')
+    int i = 0;
+    while(codEquip[i] != '\0')
     {
-        tamanhoNome++;
+        novo->codigoEquipamento[i] = codEquip[i]; i++;
     }
-    while(tamanhoNome>20)
-    {
-        printf("\n Formato de nome incorreto! Digite novamente o nome;");
-        scanf(" %[^\n]s", nomeEquip);
-        tamanhoNome = 0;
-        while (nomeEquip[tamanhoNome] != '\0')
+        novo->codigoEquipamento[i] = '\0';
+        i = 0;
+        while (nomeEquip[i] != '\0')
         {
-            tamanhoNome++;
+            novo->nomeEquipamento[i] = nomeEquip[i]; i++;
         }
-    }
+        novo->nomeEquipamento[i] = '\0';
+    novo->prioridade = prioridade;
+    novo->periodo = periodo;
+    novo->prox = NULL;
 
-    /*Prioridade
-     Prioridade 1 → período entre 1 e 7 dias
-     Prioridade 2 → período entre 1 e 15 dias
-     Prioridade 3 → período entre 1 e 20 dias. */
-    do
-    {
-        printf("\n Formato do prazo: entre 1 e 20 dias");
-        printf("\n quantos dias o equipamento fica parado: ");
-        scanf("%d", &prazo);
-    }
-    while(prazo < 1 || prazo > 20);
+    if (lista->inicio == NULL || lista->inicio->codigoSolicitacao > soli)
+        {
+        novo->prox = lista->inicio;
+        lista->inicio = novo;
+        }
+    else
+        {
+            Dados *atual = lista->inicio;
+            while (atual->prox != NULL && atual->prox->codigoSolicitacao < soli)
+            {
+                atual = atual->prox;
+            }
+            novo->prox = atual->prox;
+            atual->prox = novo;
+        }
 
-    // Verifica a prioridade com base no prazo informado
-    if(prazo>=1 && prazo<=7) 
-    {
-        prioridade=1;
-    }
-    if(prazo>=8 && prazo<=15)
-    {
-        prioridade=2;
-    }
-    if(prazo>=16 && prazo<=20)
-    {
-        prioridade=3;
-    }
-    
-
-    //Ao final da verificação, o programa utiliza a função de Criar o chamado
-    anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
-    
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
     printf("\n Codigo do equipamento: %s", codEquip);
