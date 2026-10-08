@@ -306,8 +306,10 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
            (prioridade == 3 && prazo > 20));
     
 
-    // Insere o chamado diretamente na posição correta pelo código.
-    InsereChamadoOrdenado(anterior, codSolic, codEquip, nomeEquip, prioridade, prazo);
+
+    //Ao final da verificação, o programa utiliza a função de Criar o chamado
+    anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
+    OrdenaCodigosSolicitacao(anterior); // Mantém a lista em ordem crescente pelo código.
 
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
@@ -320,5 +322,26 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 
 }
 
+
+// CASE 0 - SAIR DO PROGRAMA
+//Descrição: Função de exclusão de lista de chamados.
+//Ações: apaga lista e finaliza o programa.
+//Saída: valor NULL.
+
+Chamados *LimparListaChamados(Chamados *listachamados)
+{
+    if(listachamados!=NULL)
+    {
+        Dados *aux;
+        while(listachamados->inicio!=NULL)
+        {
+            aux=listachamados->inicio;
+            listachamados->inicio=aux->prox;
+            free(aux);
+        }
+    }
+    free(listachamados);
+    return NULL;
+}
 
 #endif // FUNCOES_H_INCLUDED
