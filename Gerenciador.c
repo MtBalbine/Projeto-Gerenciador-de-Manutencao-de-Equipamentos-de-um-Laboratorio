@@ -17,7 +17,7 @@ int main()
 
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
         printf("1 - Novo chamado\n"); // matheus finalizar
-        printf("2 - Lista   r chamados\n"); // lele
+        printf("2 - Listar chamados\n"); // lele
         printf("3 - Buscar chamado\n"); // ju
         printf("4 - Alterar a prioridade e/ou período de uma Solicitação");
         printf("5 - Atualizar chamado\n"); //matheus

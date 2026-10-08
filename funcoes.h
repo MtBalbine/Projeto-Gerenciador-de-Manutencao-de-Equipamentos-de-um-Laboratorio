@@ -38,7 +38,7 @@ typedef struct chamados
 Chamados* InicializaListaChamado()
 {
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
-    aux->inicio = NULL; 
+    aux->inicio = NULL;
     return aux;
 }
 
@@ -123,7 +123,7 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
 
     aux->prox=anterior;
     return aux;
-} 
+}
 
 // Verifica se o código da solicitação já está cadastrado na lista.
 int CodigoSolicitacaoExiste(Chamados *lista, int codigo)
@@ -273,7 +273,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     //Ao final da verificação, o programa utiliza a função de Criar o chamado
     anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
     OrdenaCodigosSolicitacao(anterior); // Mantém a lista em ordem crescente pelo código.
-    
+
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
     printf("\n Codigo do equipamento: %s", codEquip);
