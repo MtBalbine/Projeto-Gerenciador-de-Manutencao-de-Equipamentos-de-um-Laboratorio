@@ -7,10 +7,10 @@
 /*
     Funções de Manipulação de Lista:
     - InicializaListaChamado        alocam uma lista vazia.
-    - CriaChamado                   aloca e preenche um nó, ligando-o ao início atual.
+    - CriaChamado                   aloca e preenche um nó.
     - CodigoSolicitacaoExiste       percorre a lista para localizar um código.
-    - OrdenaCodigosSolicitacao      reorganiza os nós em ordem crescente de código.
-    - NovoChamado                   coleta e valida os dados, insere o nó e mantém a lista ordenada.
+    - InsereChamadoOrdenado         insere o novo nó na posição correta pelo código.
+    - NovoChamado                   coleta e valida os dados antes de inserir.
 
     Funções auxiliares do cadastro:
     - QuantCod                      conta os dígitos do código da solicitação.
@@ -126,8 +126,8 @@ Chamados* ListaChamados()
     return aux;
 }
 
-// Aloca um nó, preenche seus dados e o liga antes do nó recebido.
-Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
+// Aloca e preenche um nó, apontando-o para o próximo nó informado.
+Dados* CriaChamado(Dados* proximo, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
 {
     Dados* aux = (Dados*)malloc(sizeof(Dados));
     aux->codigoSolicitacao=soli;
@@ -152,7 +152,7 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
     aux->prioridade=prioridade;
     aux->periodo=periodo;
 
-    aux->prox=anterior;
+    aux->prox=proximo;
     return aux;
 }
 
@@ -173,40 +173,27 @@ int CodigoSolicitacaoExiste(Chamados *lista, int codigo)
     return 0;
 }
 
-// Reorganiza os nós da lista em ordem crescente, sem vetor ou ponteiro duplo.
-void OrdenaCodigosSolicitacao(Chamados *lista)
+// Insere o chamado diretamente na posição crescente do código de solicitação.
+void InsereChamadoOrdenado(Chamados *lista, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
 {
+    Dados *anterior = NULL;
     Dados *atual = lista->inicio;
-    Dados *ordenada = NULL;
 
-    // Retira cada nó da lista original e o encaixa na posição ordenada.
-    while (atual != NULL)
+    while (atual != NULL && atual->codigoSolicitacao < soli)
     {
-        Dados *proximo = atual->prox;
-
-        // Insere o nó atual na posição correta da lista já ordenada.
-        if (ordenada == NULL || atual->codigoSolicitacao < ordenada->codigoSolicitacao)
-        {
-            atual->prox = ordenada;
-            ordenada = atual;
-        }
-        else
-        {
-            Dados *posicao = ordenada;
-            while (posicao->prox != NULL &&
-                   posicao->prox->codigoSolicitacao < atual->codigoSolicitacao)
-            {
-                posicao = posicao->prox;
-            }
-
-            atual->prox = posicao->prox;
-            posicao->prox = atual;
-        }
-
-        atual = proximo;
+        anterior = atual;
+        atual = atual->prox;
     }
 
-    lista->inicio = ordenada;
+    Dados *novo = CriaChamado(atual, soli, codigoEquipamento, nomeEquipamento, prioridade, periodo);
+    if (anterior == NULL)
+    {
+        lista->inicio = novo;
+    }
+    else
+    {
+        anterior->prox = novo;
+    }
 }
 
 
@@ -319,9 +306,8 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
            (prioridade == 3 && prazo > 20));
     
 
-    // Cria o chamado, insere-o na lista e restaura a ordem pelo código.
-    anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
-    OrdenaCodigosSolicitacao(anterior); // Mantém a lista em ordem crescente pelo código.
+    // Insere o chamado diretamente na posição correta pelo código.
+    InsereChamadoOrdenado(anterior, codSolic, codEquip, nomeEquip, prioridade, prazo);
 
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
