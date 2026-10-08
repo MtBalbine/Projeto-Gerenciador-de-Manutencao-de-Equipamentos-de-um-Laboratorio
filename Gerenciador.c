@@ -8,6 +8,8 @@ int main()
     setlocale(LC_ALL, "Portuguese");
 
     int opcao = 0;
+    
+    Chamados* lista  = InicializaListaChamado();
 
     do
     {
@@ -28,6 +30,7 @@ int main()
                 // Funcao da biblioteca: cadastrar novo chamado
                 // Cria um novo registro com codigo, equipamento, prioridade e prazo.
                 // Deve chamar a funcao de insercao na lista.
+                NovoChamado(lista);
                 break;
 
             case 2:
