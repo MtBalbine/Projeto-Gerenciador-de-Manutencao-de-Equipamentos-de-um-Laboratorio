@@ -89,6 +89,58 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
     return aux;
 } 
 
+// Verifica se o código da solicitação já está cadastrado na lista.
+int CodigoSolicitacaoExiste(Chamados *lista, int codigo)
+{
+    Dados *atual = lista->inicio;
+
+    while (atual != NULL)
+    {
+        if (atual->codigoSolicitacao == codigo)
+        {
+            return 1;
+        }
+        atual = atual->prox;
+    }
+
+    return 0;
+}
+
+// Reorganiza os nós da lista em ordem crescente, sem vetor ou ponteiro duplo.
+void OrdenaCodigosSolicitacao(Chamados *lista)
+{
+    Dados *atual = lista->inicio;
+    Dados *ordenada = NULL;
+
+    while (atual != NULL)
+    {
+        Dados *proximo = atual->prox;
+
+        // Insere o nó atual na posição correta da lista já ordenada.
+        if (ordenada == NULL || atual->codigoSolicitacao < ordenada->codigoSolicitacao)
+        {
+            atual->prox = ordenada;
+            ordenada = atual;
+        }
+        else
+        {
+            Dados *posicao = ordenada;
+            while (posicao->prox != NULL &&
+                   posicao->prox->codigoSolicitacao < atual->codigoSolicitacao)
+            {
+                posicao = posicao->prox;
+            }
+
+            atual->prox = posicao->prox;
+            posicao->prox = atual;
+        }
+
+        atual = proximo;
+    }
+
+    lista->inicio = ordenada;
+}
+
 
 
 void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
@@ -105,6 +157,18 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     {
         printf("\n Formato de codigo incorreto! Digite novamente o código;");
         scanf("%d", &codSolic);
+    }
+
+    // Solicita outro código enquanto já existir uma solicitação com esse número.
+    while (CodigoSolicitacaoExiste(anterior, codSolic))
+    {
+        printf("\n Esse codigo de solicitacao ja existe. Digite outro codigo: ");
+        scanf("%d", &codSolic);
+        while(QuantCod(codSolic)!=4)
+        {
+            printf("\n Formato de codigo incorreto! Digite novamente o código;");
+            scanf("%d", &codSolic);
+        }
     }
 
     // Codigo do equipamento
@@ -177,6 +241,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 
     //Ao final da verificação, o programa utiliza a função de Criar o chamado
     anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
+    OrdenaCodigosSolicitacao(anterior); // Mantém a lista em ordem crescente pelo código.
     
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
