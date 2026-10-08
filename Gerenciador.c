@@ -40,6 +40,7 @@ int main()
                 // Funcao da biblioteca: listar todos os chamados
                 // Exibe os chamados ja cadastrados na estrutura de dados.
                 // Pode ordenar por prioridade, codigo ou data de cadastro.
+                exibirOrdemManutencao(lista);
                 break;
 
             case 3:

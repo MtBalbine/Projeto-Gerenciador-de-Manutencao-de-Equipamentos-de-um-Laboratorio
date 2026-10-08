@@ -343,4 +343,89 @@ Chamados *LimparListaChamados(Chamados *listachamados)
     return NULL;
 }
 
+/* ===== ORDEM DE MANUTENCAO (por urgencia) ===== */
+
+// Compara dois nós pela urgencia: prioridade, depois periodo, depois codigo.
+// Retorna <0 se 'a' vem antes de 'b', >0 se depois, 0 se iguais.
+int CompararUrgencia(Dados *a, Dados *b)
+{
+    // 1) Prioridade (menor numero = mais urgente)
+    if (a->prioridade != b->prioridade)
+        return a->prioridade - b->prioridade;
+
+    // 2) Periodo (menor periodo = mais urgente)
+    if (a->periodo != b->periodo)
+        return a->periodo - b->periodo;
+
+    // 3) Codigo de solicitacao (desempate)
+    return a->codigoSolicitacao - b->codigoSolicitacao;
+}
+
+// Insere um no ja criado na lista auxiliar, mantendo-a ordenada por urgencia.
+void InsereOrdenadoUrgencia(Chamados *lista, Dados *novo)
+{
+    Dados *anterior = NULL;
+    Dados *atual = lista->inicio;
+
+    while (atual != NULL && CompararUrgencia(atual, novo) <= 0)
+    {
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    novo->prox = atual;
+    if (anterior == NULL)
+        lista->inicio = novo;
+    else
+        anterior->prox = novo;
+}
+
+// Exibe a ordem de manutencao SEM alterar a lista principal.
+void exibirOrdemManutencao(Chamados *lista)
+{
+    // 1) Cria lista auxiliar vazia
+    Chamados *aux = InicializaListaChamado();
+
+    // 2) Percorre a principal e insere copias na auxiliar de forma ordenada
+    Dados *atual = lista->inicio;
+    while (atual != NULL)
+    {
+        Dados *novo = (Dados*)malloc(sizeof(Dados));
+        novo->codigoSolicitacao = atual->codigoSolicitacao;
+        strcpy(novo->codigoEquipamento, atual->codigoEquipamento);
+        strcpy(novo->nomeEquipamento, atual->nomeEquipamento);
+        novo->prioridade = atual->prioridade;
+        novo->periodo    = atual->periodo;
+        novo->prox       = NULL;
+
+        InsereOrdenadoUrgencia(aux, novo);
+
+        atual = atual->prox;
+    }
+
+    // 3) Exibe a auxiliar
+    printf("\n===== ORDEM DE MANUTENCAO (URGENCIA) =====\n");
+    Dados *p = aux->inicio;
+    if (p == NULL)
+    {
+        printf("Nenhuma solicitacao cadastrada.\n");
+    }
+    else
+    {
+        while (p != NULL)
+        {
+            printf("Cod: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias\n",
+                   p->codigoSolicitacao,
+                   p->codigoEquipamento,
+                   p->nomeEquipamento,
+                   p->prioridade,
+                   p->periodo);
+            p = p->prox;
+        }
+    }
+
+    // 4) Libera a auxiliar (NAO a principal)
+    LimparListaChamados(aux);
+}
+
 #endif // FUNCOES_H_INCLUDED
