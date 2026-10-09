@@ -16,13 +16,12 @@ int main()
         system ("cls");
 
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
-        printf("1 - Novo chamado\n"); // matheus finalizar
-        printf("2 - Listar chamados\n"); // lele
-        printf("3 - Buscar chamado\n"); // ju
-        printf("4 - Alterar a prioridade e/ou período de uma Solicitação");
-        printf("5 - Atualizar chamado\n"); //matheus
-        printf("6 - Excluir chamado\n"); // so
-        printf("0 - Sair\n"); // so
+        printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicitação de Manutenção
+        printf("2 - Listar chamados\n"); // lele -                             5 e 6 - Exibir a ordem da realização da manutenção e Exibir lista
+        printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicitação
+        printf("4 - Atualizar chamado\n"); //matheus                           4 -  Alterar a prioridade e/ou período de uma Solicitação
+        printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicitação
+        printf("0 - Sair\n"); // so -                                          0 - Finaliza
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
         getchar();
@@ -48,14 +47,12 @@ int main()
                 // Deve retornar as informacoes do registro encontrado.
                 break;
 
+
             case 4:
+                // Funcao da biblioteca: atualizar chamado
                 //Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
                 //respeitando os limites do período associado a nova prioridade.
-
-            case 5:
-                // Funcao da biblioteca: atualizar chamado
-                // Permite alterar prioridade, prazo, nome do equipamento ou status.
-                // Deve buscar o registro antes de modificar.
+                // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
                 break;
 
             case 6:
