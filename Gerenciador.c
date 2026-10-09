@@ -47,12 +47,12 @@ int main()
                 // Deve retornar as informacoes do registro encontrado.
                 break;
 
-
             case 4:
                 // Funcao da biblioteca: atualizar chamado
                 //Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
                 //respeitando os limites do período associado a nova prioridade.
                 // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
+                AlterarPrioridade(lista);
                 break;
 
             case 6:

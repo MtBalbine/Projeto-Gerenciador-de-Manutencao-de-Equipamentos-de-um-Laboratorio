@@ -1,7 +1,7 @@
 #ifndef FUNCOES_H_INCLUDED
 #define FUNCOES_H_INCLUDED
 
-#include <ctype.h> // Biblioteca para funções de manipulação de caracteres 
+#include <ctype.h> // Biblioteca para funções de manipulação de caracteres
 #include <string.h> // Biblioteca para funções de manipulação de strings
 
 /*
@@ -87,7 +87,7 @@ int LerCodigoEquipamento(char codigo[])
             {
                 if (isalpha((unsigned char)caractere))
                 {
-                    codigo[tamanho] = (char)toupper((unsigned char)caractere); // unsigned char = positivo, toupper = converte para maiúscula, 
+                    codigo[tamanho] = (char)toupper((unsigned char)caractere); // unsigned char = positivo, toupper = converte para maiúscula,
                 }
                 else
                 {
@@ -304,7 +304,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
            (prioridade == 1 && prazo > 7) ||
            (prioridade == 2 && prazo > 15) ||
            (prioridade == 3 && prazo > 20));
-    
+
 
 
      // Insere o chamado diretamente na posição correta pelo código.
@@ -318,6 +318,30 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     printf("\n Prazo do equipamento: %d", prazo);
     printf("\n\n");
     system("pause");
+
+}
+//CASE 4 - ATUALIZA O CHAMADO
+////Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
+//respeitando os limites do período associado a nova prioridade.
+// EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
+
+
+void MenuAtualizarChamado(Chamados *lista) // Print da lista o [codigoSolictacao ; prioridade] - Nome do equipamento ; Depois as escolhas
+{
+    Dados* aux = lista->inicio;
+
+    while (aux!= NULL)
+    {
+        printf("\n\t [%s ; %d] - %s", aux->codigoSolicitacao, aux->prioridade, aux->nomeEquipamento);
+        aux = aux->prox;
+    }
+
+}
+
+Chamados *AlterarPrioridade (Chamados *lista)
+{
+    MenuAtualizarChamado(lista);
+
 
 }
 
