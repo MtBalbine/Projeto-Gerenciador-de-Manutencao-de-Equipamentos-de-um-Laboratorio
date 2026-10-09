@@ -40,8 +40,8 @@ int main()
                 // Funcao da biblioteca: listar todos os chamados
                 // Exibe os chamados ja cadastrados na estrutura de dados.
                 // Pode ordenar por prioridade, codigo ou data de cadastro.
-                 printf("DEBUG MAIN: vou chamar exibirOrdemManutencao\n");
                 exibirOrdemManutencao(lista);
+                system("pause");
                 break;
 
             case 3:

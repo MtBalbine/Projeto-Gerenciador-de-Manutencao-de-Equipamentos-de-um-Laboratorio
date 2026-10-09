@@ -3,7 +3,8 @@
 
 #include <ctype.h> // Biblioteca para funções de manipulação de caracteres
 #include <string.h> // Biblioteca para funções de manipulação de strings
-
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
     Funções de Manipulação de Lista:
@@ -382,9 +383,9 @@ void InsereOrdenadoUrgencia(Chamados *lista, Dados *novo)
 }
 
 // Exibe a ordem de manutencao SEM alterar a lista principal.
+// Exibe a ordem de manutencao SEM alterar a lista principal.
 void exibirOrdemManutencao(Chamados *lista)
 {
-    printf("DEBUG: entrou na exibicao\n");
     // 1) Cria lista auxiliar vazia
     Chamados *aux = InicializaListaChamado();
 
@@ -393,9 +394,24 @@ void exibirOrdemManutencao(Chamados *lista)
     while (atual != NULL)
     {
         Dados *novo = (Dados*)malloc(sizeof(Dados));
+        if (novo == NULL) return; // Verificação de alocação de memória
+
         novo->codigoSolicitacao = atual->codigoSolicitacao;
-        strcpy(novo->codigoEquipamento, atual->codigoEquipamento);
-        strcpy(novo->nomeEquipamento, atual->nomeEquipamento);
+        int i = 0;
+        while (atual->codigoEquipamento[i] != '\0')
+        {
+            novo->codigoEquipamento[i] = atual->codigoEquipamento[i];
+            i++;
+        }
+        novo->codigoEquipamento[i] = '\0';
+        i = 0;
+        while (atual->nomeEquipamento[i] != '\0')
+        {
+            novo->nomeEquipamento[i] = atual->nomeEquipamento[i];
+            i++;
+        }
+        novo->nomeEquipamento[i] = '\0';
+
         novo->prioridade = atual->prioridade;
         novo->periodo    = atual->periodo;
         novo->prox       = NULL;
@@ -406,7 +422,7 @@ void exibirOrdemManutencao(Chamados *lista)
     }
 
     // 3) Exibe a auxiliar
-    printf("\n===== ORDEM DE MANUTENCAO =====\n");
+    printf("\n===== ORDEM DE MANUTENCAO (POR URGENCIA) =====\n");
     Dados *p = aux->inicio;
     if (p == NULL)
     {
@@ -425,9 +441,11 @@ void exibirOrdemManutencao(Chamados *lista)
             p = p->prox;
         }
     }
+    printf("===============================================\n\n");
 
-    // 4) Libera a auxiliar (NAO a principal)
+    // 4) Libera a auxiliar
     LimparListaChamados(aux);
+    system("pause");
 }
 
 #endif // FUNCOES_H_INCLUDED
