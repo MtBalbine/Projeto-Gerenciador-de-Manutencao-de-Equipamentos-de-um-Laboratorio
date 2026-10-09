@@ -4,6 +4,7 @@
 #include <ctype.h> // Biblioteca para funções de manipulação de caracteres
 #include <string.h> // Biblioteca para funções de manipulação de strings
 
+
 /*
     Funções de Manipulação de Lista:
     - InicializaListaChamado        alocam uma lista vazia.
@@ -358,7 +359,7 @@ int CompararUrgencia(Dados *a, Dados *b)
         return a->periodo - b->periodo;
 
     // 3) Codigo de solicitacao (desempate)
-    return a->codigoSolicitacao - b->codigoSolicitacao;
+        return a->codigoSolicitacao - b->codigoSolicitacao;
 }
 
 // Insere um no ja criado na lista auxiliar, mantendo-a ordenada por urgencia.
@@ -383,6 +384,7 @@ void InsereOrdenadoUrgencia(Chamados *lista, Dados *novo)
 // Exibe a ordem de manutencao SEM alterar a lista principal.
 void exibirOrdemManutencao(Chamados *lista)
 {
+    printf("DEBUG: entrou na exibicao\n");
     // 1) Cria lista auxiliar vazia
     Chamados *aux = InicializaListaChamado();
 
@@ -404,7 +406,7 @@ void exibirOrdemManutencao(Chamados *lista)
     }
 
     // 3) Exibe a auxiliar
-    printf("\n===== ORDEM DE MANUTENCAO (URGENCIA) =====\n");
+    printf("\n===== ORDEM DE MANUTENCAO =====\n");
     Dados *p = aux->inicio;
     if (p == NULL)
     {
@@ -423,9 +425,6 @@ void exibirOrdemManutencao(Chamados *lista)
             p = p->prox;
         }
     }
-
-    printf("\nPressione ENTER para voltar ao menu...");
-    getchar();
 
     // 4) Libera a auxiliar (NAO a principal)
     LimparListaChamados(aux);

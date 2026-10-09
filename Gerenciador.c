@@ -13,7 +13,7 @@ int main()
 
     do
     {
-        system ("cls");
+        system("cls");
 
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
         printf("1 - Novo chamado\n"); // matheus finalizar
@@ -40,6 +40,7 @@ int main()
                 // Funcao da biblioteca: listar todos os chamados
                 // Exibe os chamados ja cadastrados na estrutura de dados.
                 // Pode ordenar por prioridade, codigo ou data de cadastro.
+                 printf("DEBUG MAIN: vou chamar exibirOrdemManutencao\n");
                 exibirOrdemManutencao(lista);
                 break;
 
@@ -52,6 +53,7 @@ int main()
             case 4:
                 //Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
                 //respeitando os limites do período associado a nova prioridade.
+                break;
 
             case 5:
                 // Funcao da biblioteca: atualizar chamado
