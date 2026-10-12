@@ -19,7 +19,7 @@ int main()
         printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicitação de Manutenção
         printf("2 - Listar chamados\n"); // lele -                             5 e 6 - Exibir a ordem da realização da manutenção e Exibir lista
         printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicitação
-        printf("4 - Atualizar chamado\n"); //matheus                           4 -  Alterar a prioridade e/ou período de uma Solicitação
+        printf("4 - Atualizar chamado (incompleto - preciso da funcao de reorganizar prioridade da le)\n"); //matheus                           4 -  Alterar a prioridade e/ou período de uma Solicitação
         printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicitação
         printf("0 - Sair\n"); // so -                                          0 - Finaliza
         printf("Escolha uma opcao: ");
@@ -53,6 +53,7 @@ int main()
                 //respeitando os limites do período associado a nova prioridade.
                 // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
                 AlterarPrioridade(lista);
+                system("pause");
                 break;
 
             case 6:

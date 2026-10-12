@@ -44,6 +44,8 @@ typedef struct chamados
    Dados *inicio;
 }Chamados;
 
+
+
 // Cria uma lista vazia de chamados.
 Chamados* InicializaListaChamado()
 {
@@ -64,6 +66,17 @@ int QuantCod(int v)
     }
     return cont;
 }
+
+//Verifica Vazio
+int verificaVazia(Chamados *l)
+{
+    if (l->inicio== NULL)
+    {
+        return 1;
+    }
+    return 0;
+}
+
 
 // Lê a linha inteira, validando três letras e três números e convertendo as letras para maiúsculas.
 int LerCodigoEquipamento(char codigo[])
@@ -325,24 +338,126 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 //respeitando os limites do período associado a nova prioridade.
 // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
 
-
-void MenuAtualizarChamado(Chamados *lista) // Print da lista o [codigoSolictacao ; prioridade] - Nome do equipamento ; Depois as escolhas
+// Print da lista o [codigoSolictacao ; prioridade] - Nome do equipamento
+// Retorna a posicao que deseja alterar
+Dados* MenuAtualizarChamado(Chamados *lista)
 {
-    Dados* aux = lista->inicio;
-
-    while (aux!= NULL)
+    if (lista == NULL || verificaVazia(lista))
     {
-        printf("\n\t [%s ; %d] - %s", aux->codigoSolicitacao, aux->prioridade, aux->nomeEquipamento);
+        printf("\n Lista Vazia\n");
+        return NULL;
+    }
+
+    Dados *aux = lista->inicio;
+    int codigoSelecionado;
+    int validade = 0;
+
+    printf("\n Chamados cadastrados:");
+    while (aux != NULL)
+    {
+        printf("\n\t [%d ; %d] - %s", aux->codigoSolicitacao, aux->prioridade, aux->nomeEquipamento);
         aux = aux->prox;
     }
+
+    do
+    {
+        printf("\n Selecione o codigo da solicitacao: ");
+        scanf("%d", &codigoSelecionado);
+
+        aux = lista->inicio;
+        while (aux != NULL && aux->codigoSolicitacao != codigoSelecionado)
+        {
+            aux = aux->prox;
+        }
+
+        if (aux == NULL)
+        {
+            printf("\n Codigo nao encontrado. Tente novamente.\n");
+            validade = 0;
+        }
+        else
+        {
+            validade = 1;
+        }
+    }
+    while (validade == 0);
+
+    return aux;
 
 }
 
 Chamados *AlterarPrioridade (Chamados *lista)
 {
-    MenuAtualizarChamado(lista);
+    // Verificar vazio
+    if(verificaVazia(lista))
+    {
+        printf("\n Lista Vazia\n");
+        return lista;
+    }
+
+    //Menu com a lista de todos os chamados
+    Dados *aux = MenuAtualizarChamado(lista);
+    if (aux == NULL)
+    {
+        return lista;
+    }
+
+    int prioridadeNova;
+    int periodoNovo;
+    int periodoMaximo;
+
+    printf("\n Prioridade atual: %d", aux->prioridade);
+    printf("\n Quantidade de dias atual: %d dias", aux->periodo);
+
+    do
+    {
+        printf("\n Alterar prioridade para (1, 2 ou 3): ");
+        scanf("%d", &prioridadeNova);
+        if (prioridadeNova < 1 || prioridadeNova > 3)
+        {
+            printf("\n Prioridade invalida. Digite 1, 2 ou 3.\n");
+        }
+    }
+    while (prioridadeNova < 1 || prioridadeNova > 3);
+
+    if (prioridadeNova == 1)
+    {
+        periodoMaximo = 7;
+    }
+    if (prioridadeNova == 2)
+    {
+        periodoMaximo = 15;
+    }
+    else
+    {
+        periodoMaximo = 20;
+    }
+
+    do
+    {
+        printf("\n Alterar periodo para (1 a %d dias): ", periodoMaximo);
+        scanf("%d", &periodoNovo);
+        if (periodoNovo < 1 || periodoNovo > periodoMaximo)
+        {
+            printf("\n Periodo invalido para essa prioridade.\n");
+        }
+    }
+    while (periodoNovo < 1 || periodoNovo > periodoMaximo);
+
+    aux->prioridade = prioridadeNova;
+    aux->periodo = periodoNovo;
 
 
+
+    /*
+
+            AQUI QUE REORGANIZO A LISTA DE PRIORIDADE PRECISO QUE A LETICIA FINALIZE
+
+    */
+
+
+    printf("\n Prioridade e periodo atualizados com sucesso.\n");
+    return lista;
 }
 
 
