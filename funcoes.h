@@ -44,8 +44,6 @@ typedef struct chamados
    Dados *inicio;
 }Chamados;
 
-
-
 // Cria uma lista vazia de chamados.
 Chamados* InicializaListaChamado()
 {
@@ -53,6 +51,25 @@ Chamados* InicializaListaChamado()
     aux->inicio = NULL;
     return aux;
 }
+
+
+
+//Verifica Vazio
+int verificaVazia(Chamados *l)
+{
+    if (l->inicio== NULL)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+// INICIO CASE 1
+/*
+COLOCAR DESCRIÇÃO
+
+
+*/
 
 // Conta os dígitos de um código positivo de solicitação.
 int QuantCod(int v)
@@ -66,17 +83,6 @@ int QuantCod(int v)
     }
     return cont;
 }
-
-//Verifica Vazio
-int verificaVazia(Chamados *l)
-{
-    if (l->inicio== NULL)
-    {
-        return 1;
-    }
-    return 0;
-}
-
 
 // Lê a linha inteira, validando três letras e três números e convertendo as letras para maiúsculas.
 int LerCodigoEquipamento(char codigo[])
@@ -128,15 +134,6 @@ int LerCodigoEquipamento(char codigo[])
 
     codigo[6] = '\0';
     return valido && tamanho == 6;
-}
-
-// Cria e retorna outra lista vazia de chamados.
-Chamados* ListaChamados()
-{
-    Chamados *aux;
-    aux=(Chamados*)malloc(sizeof(Chamados));
-    aux->inicio=NULL;
-    return aux;
 }
 
 // Aloca e preenche um nó, apontando-o para o próximo nó informado.
@@ -208,8 +205,6 @@ void InsereChamadoOrdenado(Chamados *lista, int soli, char codigoEquipamento[], 
         anterior->prox = novo;
     }
 }
-
-
 
 void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 {
@@ -333,6 +328,9 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     system("pause");
 
 }
+// FIM CASE 1
+
+
 //CASE 4 - ATUALIZA O CHAMADO
 ////Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
 //respeitando os limites do período associado a nova prioridade.
@@ -459,16 +457,63 @@ Chamados *AlterarPrioridade (Chamados *lista)
     printf("\n Prioridade e periodo atualizados com sucesso.\n");
     return lista;
 }
+// FIM DO CASE 4
 
+// CASE 5 - EXCLUIR CHAMADO
+/*
+Entrada: lista.
+Funções:
+    ExcluirChamado: tem a entrada de uma lista, solicita o código do chamado a ser excluido,
+    verifica se o codigo existe chmando a função CodigoSolicitacaoExiste e por fim, se existir,
+    procura o chamado na lista e o exclui.
+Saida: Lista nova com o chamado solicitado excluido.
+*/
+
+Chamados* ExcluirChamado(Chamados *lista)
+{
+    if(verificaVazia(lista))
+    {
+        printf("\n Lista Vazia, impossivel realizar a operacao.");
+        return lista;
+    }
+    int cod;
+    printf("\n Digite o codigo de solicitacao do chamado que deseja excluir:  ");
+    scanf("%d", &cod);
+    if(CodigoSolicitacaoExiste(lista,cod))
+    {
+        Dados *aux1=lista->inicio;
+        Dados *aux2=lista->inicio;
+        while(aux1->prox->codigoSolicitacao==cod)
+        {
+            aux1=aux1->prox;
+            aux2=aux2->prox;
+        }
+        aux1=aux1->prox;
+        aux2->prox=aux1->prox;
+        free(aux1);
+
+        return lista;
+    }
+    printf("\n Codigo nao existe na lista");
+        return lista;
+
+}
+
+
+
+
+// FIM DO CASE 5
 
 // CASE 0 - SAIR DO PROGRAMA
-//Descrição: Função de exclusão de lista de chamados.
-//Ações: apaga lista e finaliza o programa.
-//Saída: valor NULL.
+/*
+Descrição: Função de exclusão de lista de chamados.
+Ações: apaga lista e finaliza o programa.
+Saída: valor NULL.
+*/
 
 Chamados *LimparListaChamados(Chamados *listachamados)
 {
-    if(listachamados!=NULL)
+    if(!verificaVazia(listachamados))
     {
         Dados *aux;
         while(listachamados->inicio!=NULL)
@@ -481,5 +526,6 @@ Chamados *LimparListaChamados(Chamados *listachamados)
     free(listachamados);
     return NULL;
 }
+// FIM DO CASE 0
 
 #endif // FUNCOES_H_INCLUDED

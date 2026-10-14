@@ -39,7 +39,24 @@ int main()
                 // Funcao da biblioteca: listar todos os chamados
                 // Exibe os chamados ja cadastrados na estrutura de dados.
                 // Pode ordenar por prioridade, codigo ou data de cadastro.
+                 int ordem=0;
+                 printf("Ordenacao por: \n");
+                 printf("1 - Codigo de Solicitacao\n");
+                 printf("2 - Prioridade\n");
+                 scanf("%d", &ordem);
+                switch (ordem)
+                {
+
+            case 1:
                 break;
+
+            case 2:
+
+                break;
+            default:
+                printf("\nOpcao invalida! Tente novamente.\n");
+                break;
+                }
 
             case 3:
                 // Funcao da biblioteca: buscar chamado
@@ -56,10 +73,11 @@ int main()
                 system("pause");
                 break;
 
-            case 6:
+            case 5:
                 // Funcao da biblioteca: excluir chamado
                 // Remove o chamado da lista de manutencao.
                 // Pode ser por codigo da solicitacao ou codigo do equipamento.
+                ExcluirChamado(lista);
                 break;
 
             case 0:
