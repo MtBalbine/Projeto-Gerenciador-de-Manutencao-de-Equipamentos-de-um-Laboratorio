@@ -41,7 +41,6 @@ int main()
                 // Exibe os chamados ja cadastrados na estrutura de dados.
                 // Pode ordenar por prioridade, codigo ou data de cadastro.
                 exibirOrdemManutencao(lista);
-                system("pause");
                 break;
 
             case 3:
