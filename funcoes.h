@@ -130,14 +130,6 @@ int LerCodigoEquipamento(char codigo[])
     return valido && tamanho == 6;
 }
 
-// Cria e retorna outra lista vazia de chamados.
-Chamados* ListaChamados()
-{
-    Chamados *aux;
-    aux=(Chamados*)malloc(sizeof(Chamados));
-    aux->inicio=NULL;
-    return aux;
-}
 
 // Aloca e preenche um nó, apontando-o para o próximo nó informado.
 Dados* CriaChamado(Dados* proximo, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
