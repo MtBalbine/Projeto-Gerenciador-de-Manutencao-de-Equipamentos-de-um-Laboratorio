@@ -397,7 +397,7 @@ Chamados *AlterarPrioridade (Chamados *lista)
 
     //Menu com a lista de todos os chamados
     Dados *aux = MenuAtualizarChamado(lista);
-    if (aux == NULL)
+    if (aux == NULL) // Caso o usuário cancele a operação ou não selecione um chamado válido
     {
         return lista;
     }
@@ -418,7 +418,7 @@ Chamados *AlterarPrioridade (Chamados *lista)
             printf("\n Prioridade invalida. Digite 1, 2 ou 3.\n");
         }
     }
-    while (prioridadeNova < 1 || prioridadeNova > 3);
+    while (prioridadeNova < 1 || prioridadeNova > 3); // Loop para garantir que a prioridade seja válida (1, 2 ou 3)
 
     if (prioridadeNova == 1)
     {
@@ -446,15 +446,6 @@ Chamados *AlterarPrioridade (Chamados *lista)
 
     aux->prioridade = prioridadeNova;
     aux->periodo = periodoNovo;
-
-
-
-    /*
-
-            AQUI QUE REORGANIZO A LISTA DE PRIORIDADE PRECISO QUE A LETICIA FINALIZE
-
-    */
-
 
     printf("\n Prioridade e periodo atualizados com sucesso.\n");
     return lista;

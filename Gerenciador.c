@@ -16,11 +16,11 @@ int main()
         system ("cls");
 
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
-        printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicitação de Manutenção
-        printf("2 - Listar chamados\n"); // lele -                             5 e 6 - Exibir a ordem da realização da manutenção e Exibir lista
-        printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicitação
-        printf("4 - Atualizar chamado (incompleto - preciso da funcao de reorganizar prioridade da le)\n"); //matheus                           4 -  Alterar a prioridade e/ou período de uma Solicitação
-        printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicitação
+        printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicitaï¿½ï¿½o de Manutenï¿½ï¿½o
+        printf("2 - Listar chamados\n"); // lele -                             5 e 6 - Exibir a ordem da realizaï¿½ï¿½o da manutenï¿½ï¿½o e Exibir lista
+        printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicitaï¿½ï¿½o
+        printf("4 - Atualizar chamado\n"); //matheus                           4 -  Alterar a prioridade e/ou perï¿½odo de uma Solicitaï¿½ï¿½o
+        printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicitaï¿½ï¿½o
         printf("0 - Sair\n"); // so -                                          0 - Finaliza
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
@@ -49,8 +49,8 @@ int main()
 
             case 4:
                 // Funcao da biblioteca: atualizar chamado
-                //Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
-                //respeitando os limites do período associado a nova prioridade.
+                //Dado o cï¿½digo de solicitaï¿½ï¿½o o usuï¿½rio pode alterar a prioridade e o perï¿½odo dela,
+                //respeitando os limites do perï¿½odo associado a nova prioridade.
                 // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
                 AlterarPrioridade(lista);
                 system("pause");
