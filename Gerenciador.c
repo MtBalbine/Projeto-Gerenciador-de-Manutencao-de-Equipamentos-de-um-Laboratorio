@@ -8,7 +8,7 @@ int main()
     setlocale(LC_ALL, "Portuguese");
 
     int opcao = 0;
-    
+
     Chamados* lista  = InicializaListaChamado();
 
     do
@@ -68,7 +68,7 @@ int main()
 
     } while (opcao != 0);
 
-    
+
     system("pause");
     return 0;
 }

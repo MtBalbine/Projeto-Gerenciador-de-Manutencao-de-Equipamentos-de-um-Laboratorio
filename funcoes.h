@@ -189,20 +189,21 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 
 }
 
-void ConsultarChamado(Chamado *lista, int CodSOlic)
+void ConsultarChamado(Chamados *lista, int CodSOlic)
 {
     Dados *atual = lista -> inicio;
     while(atual != NULL)
     {
-        pritnf("\n-- Detalhes da Solicitação --\n");
-        printf("Codigo da Solicitacao: %d\n", atual -> codigoSolicitacao)
+        printf("\n-- Detalhes da Solicitação --\n");
+        printf("Codigo da Solicitacao: %d\n", atual -> codigoSolicitacao);
         printf("Equipamento: %s (%s)\n", atual -> nomeEquipamento, atual -> codigoEquipamento);
         printf("Prioridade: %d | Periodo: %d dias\n", atual -> prioridade, atual -> periodo);
         return;
     }
     atual = atual -> prox;
+    printf("\nSolicitacao nao encontrada.\n");
 }
-printf("\nSolicitacao nao encontrada.\n");
+
 
 
 #endif // FUNCOES_H_INCLUDED
