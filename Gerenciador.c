@@ -45,6 +45,7 @@ int main()
                 // Funcao da biblioteca: buscar chamado
                 // Pesquisa um chamado pelo codigo do equipamento ou codigo da solicitacao.
                 // Deve retornar as informacoes do registro encontrado.
+                SolicitarChamado(lista);
                 break;
 
             case 4:
