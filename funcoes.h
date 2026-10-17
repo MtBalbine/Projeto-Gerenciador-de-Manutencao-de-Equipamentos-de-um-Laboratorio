@@ -38,7 +38,7 @@ typedef struct chamados
 Chamados* InicializaListaChamado()
 {
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
-    aux->inicio = NULL; 
+    aux->inicio = NULL;
     return aux;
 }
 
@@ -87,7 +87,7 @@ Dados* CriaChamado(Dados* anterior, int soli, char codigoEquipamento[], char nom
 
     aux->prox=anterior;
     return aux;
-} 
+}
 
 
 
@@ -161,7 +161,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     while(prazo < 1 || prazo > 20);
 
     // Verifica a prioridade com base no prazo informado
-    if(prazo>=1 && prazo<=7) 
+    if(prazo>=1 && prazo<=7)
     {
         prioridade=1;
     }
@@ -173,11 +173,11 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     {
         prioridade=3;
     }
-    
+
 
     //Ao final da verificação, o programa utiliza a função de Criar o chamado
     anterior->inicio = CriaChamado(anterior->inicio, codSolic, codEquip, nomeEquip, prioridade, prazo);
-    
+
     printf("\n Chamado cadastrado com sucesso!\n");
     printf("\n Codigo do chamado: %d", codSolic);
     printf("\n Codigo do equipamento: %s", codEquip);
@@ -188,6 +188,21 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     system("pause");
 
 }
+
+void ConsultarChamado(Chamado *lista, int CodSOlic)
+{
+    Dados *atual = lista -> inicio;
+    while(atual != NULL)
+    {
+        pritnf("\n-- Detalhes da Solicitação --\n");
+        printf("Codigo da Solicitacao: %d\n", atual -> codigoSolicitacao)
+        printf("Equipamento: %s (%s)\n", atual -> nomeEquipamento, atual -> codigoEquipamento);
+        printf("Prioridade: %d | Periodo: %d dias\n", atual -> prioridade, atual -> periodo);
+        return;
+    }
+    atual = atual -> prox;
+}
+printf("\nSolicitacao nao encontrada.\n");
 
 
 #endif // FUNCOES_H_INCLUDED
