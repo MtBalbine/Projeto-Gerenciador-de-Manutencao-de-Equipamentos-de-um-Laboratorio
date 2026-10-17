@@ -5,7 +5,7 @@
 
 int main()
 {
-    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "portuguese");
 
     int opcao = 0;
 
@@ -13,13 +13,15 @@ int main()
 
     do
     {
+        system ("cls");
+
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
-        printf("1 - Novo chamado\n");
-        printf("2 - Listar chamados\n");
-        printf("3 - Buscar chamado\n");
-        printf("4 - Atualizar chamado\n");
-        printf("5 - Excluir chamado\n");
-        printf("0 - Sair\n");
+        printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicita��o de Manuten��o
+        printf("2 - Listar chamados\n"); // lele -                             5 e 6 - Exibir a ordem da realiza��o da manuten��o e Exibir lista
+        printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicita��o
+        printf("4 - Atualizar chamado\n"); //matheus                           4 -  Alterar a prioridade e/ou per�odo de uma Solicita��o
+        printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicita��o
+        printf("0 - Sair\n"); // so -                                          0 - Finaliza
         printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
         getchar();
@@ -47,11 +49,14 @@ int main()
 
             case 4:
                 // Funcao da biblioteca: atualizar chamado
-                // Permite alterar prioridade, prazo, nome do equipamento ou status.
-                // Deve buscar o registro antes de modificar.
+                //Dado o c�digo de solicita��o o usu�rio pode alterar a prioridade e o per�odo dela,
+                //respeitando os limites do per�odo associado a nova prioridade.
+                // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
+                AlterarPrioridade(lista);
+                system("pause");
                 break;
 
-            case 5:
+            case 6:
                 // Funcao da biblioteca: excluir chamado
                 // Remove o chamado da lista de manutencao.
                 // Pode ser por codigo da solicitacao ou codigo do equipamento.
@@ -59,6 +64,7 @@ int main()
 
             case 0:
                 printf("\nEncerrando o sistema...\n");
+                LimparListaChamados(lista);
                 break;
 
             default:
