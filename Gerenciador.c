@@ -91,7 +91,7 @@ int main()
                 {
                      if(verificaVazia(lista))
                 {
-                    printf("\n Lista vazia, impossivel proesseguir!\n");
+                    printf("\n Lista vazia, impossivel prosseguir!\n");
                     system("pause");
                     break;
                 }

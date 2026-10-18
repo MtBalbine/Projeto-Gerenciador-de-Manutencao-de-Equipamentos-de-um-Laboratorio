@@ -484,12 +484,21 @@ Chamados* ExcluirChamado(Chamados *lista)
                printf("\n 1 - SIM \n 2 - NAO \n Resposta:");
                scanf("%d", &conf);
          if(conf==1)
-         {
+             {
+            if(aux1 == lista->inicio)
+            {
+                lista->inicio = aux1->prox;
+            }
+            else
+            {
             aux2->prox=aux1->prox;
+            }
             free(aux1);
             printf("\n Chamado excluido com sucesso! \n");
+
          }
-         else{
+         else
+        {
             printf("\n Operacao cancelada.\n");
          }
         system("pause");
@@ -501,10 +510,6 @@ Chamados* ExcluirChamado(Chamados *lista)
         return lista;
 
 }
-
-
-
-
 // FIM DO CASE 5
 
 // CASE 0 - SAIR DO PROGRAMA
