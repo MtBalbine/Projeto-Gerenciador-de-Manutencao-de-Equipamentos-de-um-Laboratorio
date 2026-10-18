@@ -516,7 +516,7 @@ void InsereOrdenadoUrgencia(Chamados *lista, Dados *novo)
     Dados *anterior = NULL;
     Dados *atual = lista->inicio;
 
-    while (atual != NULL && CompararUrgencia(atual, novo) <= 0)
+    while (atual != NULL && CompararUrgencia(atual, novo) < 0)
     {
         anterior = atual;
         atual = atual->prox;
