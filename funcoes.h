@@ -467,10 +467,35 @@ Chamados *LimparListaChamados(Chamados *listachamados)
     return NULL;
 }
 
-/* ===== ORDEM DE MANUTENCAO (por urgencia) ===== */
-
+//case 2 listagem da ordem de mautenção
 // Compara dois nós pela urgencia: prioridade, depois periodo, depois codigo.
 // Retorna <0 se 'a' vem antes de 'b', >0 se depois, 0 se iguais.
+// Exibe todas as solicitações cadastradas na ordem da lista principal (por código de solicitação)
+void ExibirListaGeral(Chamados *lista)
+{
+    if (lista == NULL || verificaVazia(lista))
+    {
+        printf("\nNenhuma solicitacao cadastrada.\n");
+        system("pause");
+        return;
+    }
+
+    printf("\n===== LISTA GERAL DE SOLICITACOES (POR CODIGO) =====\n");
+    Dados *atual = lista->inicio;
+    while (atual != NULL)
+    {
+        printf("Cod Solicitacao: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias\n",
+               atual->codigoSolicitacao,
+               atual->codigoEquipamento,
+               atual->nomeEquipamento,
+               atual->prioridade,
+               atual->periodo);
+        atual = atual->prox;
+    }
+    printf("==================================================\n\n");
+    system("pause");
+}
+
 int CompararUrgencia(Dados *a, Dados *b)
 {
     // 1) Prioridade (menor numero = mais urgente)

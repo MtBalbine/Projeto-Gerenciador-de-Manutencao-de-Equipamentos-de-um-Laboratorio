@@ -17,7 +17,7 @@ int main()
 
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
         printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicita��o de Manuten��o
-        printf("2 - Listar chamados\n"); // lele -                             5 e 6 - Exibir a ordem da realiza��o da manuten��o e Exibir lista
+        printf("2 - Menu de listagem\n"); // lele -                             5 e 6 - Exibir a ordem da realiza��o da manuten��o e Exibir lista
         printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicita��o
         printf("4 - Atualizar chamado\n"); //matheus                           4 -  Alterar a prioridade e/ou per�odo de uma Solicita��o
         printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicita��o
@@ -38,7 +38,26 @@ int main()
             case 2:
                 // Funcao da biblioteca: listar todos os chamados
                 // Exibe os chamados ja cadastrados na estrutura de dados.
+                // Um sub menu para qual tipo de listagem o usuario deseja ver.
                 // Pode ordenar por prioridade, codigo ou data de cadastro.
+                printf("\n===== MENU DE LISTAGEM =====\n");
+                printf("1 - Exibir ordem de realizacao da manutencao (por urgencia)\n");
+                printf("2 - Exibir todas as solicitacoes cadastradas (por codigo)\n");
+                printf("0 - Voltar ao menu principal\n");
+                printf("Escolha uma opcao: ");
+
+                int subOpcao;   q
+                scanf("%d", &subOpcao);
+                getchar(); // Limpa o enter do buffer
+
+                if (subOpcao == 1)
+                {
+                    exibirOrdemManutencao(lista);
+                }
+                else if (subOpcao == 2)
+                {
+                    ExibirListaGeral(lista);
+                }
                 break;
 
             case 3:
@@ -56,7 +75,7 @@ int main()
                 system("pause");
                 break;
 
-            case 6:
+            case 5:
                 // Funcao da biblioteca: excluir chamado
                 // Remove o chamado da lista de manutencao.
                 // Pode ser por codigo da solicitacao ou codigo do equipamento.
