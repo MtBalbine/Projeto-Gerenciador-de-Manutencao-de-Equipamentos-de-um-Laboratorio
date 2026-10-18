@@ -330,19 +330,33 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 ////Procura o chamado na lista de chamado já feita apartir de um codigo digitado pelo usuario,
 ////imprime na tela se não achar o chamado e se existir mostra o nome do equipamento, o codigo do chamado,
 ////a prioridade e o periodo do equipamento.
-void ConsultarChamado(Chamados *lista, int CodSOlic)
+void ConsultarChamado(Chamados *lista)
 {
-    Dados *atual = lista -> inicio;
-    while(atual != NULL)
-    {
-        printf("\n-- Detalhes da Solicitação --\n");
-        printf("Codigo da Solicitacao: %d\n", atual -> codigoSolicitacao);
-        printf("Equipamento: %s (%s)\n", atual -> nomeEquipamento, atual -> codigoEquipamento);
-        printf("Prioridade: %d | Periodo: %d dias\n", atual -> prioridade, atual -> periodo);
+    if (verificaVazia(lista)) {
+        printf("\nLista Vazia.\n");
+        system("pause");
         return;
     }
-    atual = atual -> prox;
+
+    int CodSOlic;
+    printf("\nDigite o codigo da solicitacao que deseja consultar: ");
+    scanf("%d", &CodSOlic);
+
+    Dados *atual = lista->inicio;
+    while(atual != NULL)
+    {
+        if(atual->codigoSolicitacao == CodSOlic) {
+            printf("\n-- Detalhes da Solicitacao --\n");
+            printf("Codigo da Solicitacao: %d\n", atual->codigoSolicitacao);
+            printf("Equipamento: %s (%s)\n", atual->nomeEquipamento, atual->codigoEquipamento);
+            printf("Prioridade: %d | Periodo: %d dias\n", atual->prioridade, atual->periodo);
+            system("pause");
+            return;
+        }
+        atual = atual->prox;
+    }
     printf("\nSolicitacao nao encontrada.\n");
+    system("pause");
 }
 
 //CASE 4 - ATUALIZA O CHAMADO
