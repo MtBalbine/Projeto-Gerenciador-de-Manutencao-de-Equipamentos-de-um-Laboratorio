@@ -48,7 +48,11 @@ typedef struct chamados
 
 
 
-// Cria uma lista vazia de chamados.
+/*
+    Descrição: Cria e inicializa uma lista vazia de chamados.
+    Entrada: Nenhuma.
+    Saída: Ponteiro para a lista vazia criada.
+*/
 Chamados* InicializaListaChamado()
 {
     Chamados *aux = (Chamados*)malloc(sizeof(Chamados));
@@ -56,7 +60,11 @@ Chamados* InicializaListaChamado()
     return aux;
 }
 
-// Conta os dígitos de um código positivo de solicitação.
+/*
+    Descrição: Conta a quantidade de dígitos de um código de solicitação.
+    Entrada: Número inteiro representando o código da solicitação.
+    Saída: Quantidade de dígitos do valor informado.
+*/
 int QuantCod(int v)
 {
     int cont=0;
@@ -69,7 +77,11 @@ int QuantCod(int v)
     return cont;
 }
 
-//Verifica Vazio
+/*
+    Descrição: Verifica se a lista de chamados está vazia.
+    Entrada: Ponteiro para a lista de chamados.
+    Saída: Retorna 1 se a lista estiver vazia e 0 se não estiver.
+*/
 int verificaVazia(Chamados *l)
 {
     if (l->inicio== NULL)
@@ -80,7 +92,13 @@ int verificaVazia(Chamados *l)
 }
 
 
-// Lê a linha inteira, validando três letras e três números e convertendo as letras para maiúsculas.
+//Case 1 - Cria chamado
+
+/*
+    Descrição: Valida e lê o código do equipamento no formato de 3 letras e 3 números.
+    Entrada: Vetor de caracteres que receberá o código do equipamento.
+    Saída: Retorna 1 se o código for válido e 0 se for inválido.
+*/
 int LerCodigoEquipamento(char codigo[])
 {
     int caractere = getchar();
@@ -133,7 +151,11 @@ int LerCodigoEquipamento(char codigo[])
 }
 
 
-// Aloca e preenche um nó, apontando-o para o próximo nó informado.
+/*
+    Descrição: Cria e preenche um novo nó da lista de chamados com os dados informados.
+    Entrada: Ponteiro para o próximo nó, código da solicitação, código do equipamento, nome do equipamento, prioridade e período.
+    Saída: Ponteiro para o novo nó criado.
+*/
 Dados* CriaChamado(Dados* proximo, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
 {
     Dados* aux = (Dados*)malloc(sizeof(Dados));
@@ -163,7 +185,11 @@ Dados* CriaChamado(Dados* proximo, int soli, char codigoEquipamento[], char nome
     return aux;
 }
 
-// Verifica se o código da solicitação já está cadastrado na lista.
+/*
+    Descrição: Verifica se um código de solicitação já existe na lista.
+    Entrada: Ponteiro para a lista de chamados e código a ser pesquisado.
+    Saída: Retorna 1 se o código existir e 0 se não existir.
+*/
 int CodigoSolicitacaoExiste(Chamados *lista, int codigo)
 {
     Dados *atual = lista->inicio;
@@ -180,7 +206,11 @@ int CodigoSolicitacaoExiste(Chamados *lista, int codigo)
     return 0;
 }
 
-// Insere o chamado diretamente na posição crescente do código de solicitação.
+/*
+    Descrição: Insere um novo chamado na lista em ordem crescente de código de solicitação.
+    Entrada: Ponteiro para a lista, código da solicitação, código do equipamento, nome, prioridade e período.
+    Saída: Nenhuma.
+*/
 void InsereChamadoOrdenado(Chamados *lista, int soli, char codigoEquipamento[], char nomeEquipamento[], int prioridade, int periodo)
 {
     Dados *anterior = NULL;
@@ -205,6 +235,11 @@ void InsereChamadoOrdenado(Chamados *lista, int soli, char codigoEquipamento[], 
 
 
 
+/*
+    Descrição: Coleta e valida os dados de um novo chamado e o insere na lista.
+    Entrada: Ponteiro para a lista de chamados.
+    Saída: Nenhuma, porém exibe mensagens ao usuário e cadastra o chamado.
+*/
 void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 {
     int codSolic, prioridade, prazo;
@@ -327,6 +362,9 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     system("pause");
 
 }
+//FIM CASE 1
+
+
 //CASE 4 - ATUALIZA O CHAMADO
 ////Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
 //respeitando os limites do período associado a nova prioridade.
