@@ -85,7 +85,21 @@ int main()
             case 5:
                 // Funcao da biblioteca: excluir chamado
                 // Remove o chamado da lista de manutencao.
-                // Pode ser por codigo da solicitacao ou codigo do equipamento.
+                // Pode ser por codigo da solicitacao.
+                int excluir;
+                do
+                {
+                     if(verificaVazia(lista))
+                {
+                    printf("\n Lista vazia, impossivel proesseguir!\n");
+                    system("pause");
+                    break;
+                }
+                    ExcluirChamado(lista);
+                    system ("cls");
+                    printf("\n Deseja excluir mais algum chamado?\n 1 - SIM \n 2 - NAO \n Resposta:");
+                    scanf("%d", &excluir);
+                }while(excluir==1);
                 break;
 
             case 0:
