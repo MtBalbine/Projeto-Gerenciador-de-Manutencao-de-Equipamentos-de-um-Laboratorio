@@ -40,23 +40,25 @@ int main()
                 // Exibe os chamados ja cadastrados na estrutura de dados.
                 // Um sub menu para qual tipo de listagem o usuario deseja ver.
                 // Pode ordenar por prioridade, codigo ou data de cadastro.
+                {
                 printf("\n===== MENU DE LISTAGEM =====\n");
                 printf("1 - Exibir ordem de realizacao da manutencao (por urgencia)\n");
                 printf("2 - Exibir todas as solicitacoes cadastradas (por codigo)\n");
                 printf("0 - Voltar ao menu principal\n");
                 printf("Escolha uma opcao: ");
 
-                int subOpcao;   q
+                int subOpcao;
                 scanf("%d", &subOpcao);
                 getchar(); // Limpa o enter do buffer
 
-                if (subOpcao == 1)
-                {
-                    exibirOrdemManutencao(lista);
-                }
-                else if (subOpcao == 2)
-                {
-                    ExibirListaGeral(lista);
+                    if (subOpcao == 1)
+                        {
+                        exibirOrdemManutencao(lista);
+                        }
+                    else if (subOpcao == 2)
+                        {
+                        ExibirListaGeral(lista);
+                        }
                 }
                 break;
 
