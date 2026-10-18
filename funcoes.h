@@ -500,12 +500,19 @@ Chamados* ExcluirChamado(Chamados *lista)
         printf("\n Lista Vazia, impossivel realizar a operacao.");
         return lista;
     }
+    Dados *aux1 = lista->inicio;
+    while (aux1 != NULL)
+    {
+        printf("\n\t [%d ; %d] - %s", aux1->codigoSolicitacao, aux1->prioridade, aux1->nomeEquipamento);
+        aux1 = aux1->prox;
+    }
+
     int cod;
     printf("\n Digite o codigo de solicitacao do chamado que deseja excluir: ");
     scanf("%d", &cod);
     if(CodigoSolicitacaoExiste(lista,cod))
     {
-        Dados *aux1=lista->inicio;
+        aux1=lista->inicio;
         Dados *aux2=lista->inicio;
         while(aux1->codigoSolicitacao!=cod)
         {
