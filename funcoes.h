@@ -588,7 +588,7 @@ void exibirOrdemManutencao(Chamados *lista)
             p = p->prox;
         }
     }
-    printf("===============================================\n\n");
+    printf("==========================================================================\n\n");
 
     // 4) Libera a auxiliar
     LimparListaChamados(aux);
