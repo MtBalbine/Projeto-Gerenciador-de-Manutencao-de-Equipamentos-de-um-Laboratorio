@@ -338,25 +338,52 @@ void ConsultarChamado(Chamados *lista)
         return;
     }
 
-    int CodSOlic;
-    printf("\nDigite o codigo da solicitacao que deseja consultar: ");
-    scanf("%d", &CodSOlic);
+    int CodSolic;
+    int continuar;
 
-    Dados *atual = lista->inicio;
-    while(atual != NULL)
+    do
     {
-        if(atual->codigoSolicitacao == CodSOlic) {
-            printf("\n-- Detalhes da Solicitacao --\n");
-            printf("Codigo da Solicitacao: %d\n", atual->codigoSolicitacao);
-            printf("Equipamento: %s (%s)\n", atual->nomeEquipamento, atual->codigoEquipamento);
-            printf("Prioridade: %d | Periodo: %d dias\n", atual->prioridade, atual->periodo);
-            system("pause");
-            return;
+        system("cls");
+        printf("\n--- Consultar Chamado ---\n");
+
+        printf("Digite o codigo do chamado que deseja consultar (4 digitos): ");
+        scanf("%d", &CodSolic);
+        while(QuantCod(CodSolic) != 4)
+        {
+            printf("Formato incorreto! Digite novamente um codigo que possua 4 digitos: ");
+            scanf("%d", &CodSolic);
         }
-        atual = atual->prox;
+
+        Dados *atual = lista -> inicio;
+        int encontrou = 0;
+
+        while(atual != NULL)
+        {
+            if(atual -> codigoSolicitacao == CodSolic)
+            {
+                printf("\n-- Detalhes do Chamado --\n");
+                printf("Codigo do Chamado: %d\n", atual->codigoSolicitacao);
+                printf("Equipamento: %s (%s)\n", atual->nomeEquipamento, atual->codigoEquipamento);
+                printf("Prioridade: %d | Periodo: %d dias\n", atual->prioridade, atual->periodo);
+
+                encontrou = 1; // Marca que encontrou
+                break; // Para de procurar na lista
+            }
+            atual = atual -> prox;
+        }
+        if (encontrou == 0) {
+            printf("\nChamado nao encontrado.\n");
     }
-    printf("\nSolicitacao nao encontrada.\n");
-    system("pause");
+    do {
+            printf("\nDeseja procurar outro codigo? (1 - Sim / 0 - Voltar ao Menu): ");
+            scanf("%d", &continuar);
+
+            if (continuar != 0 && continuar != 1) {
+                printf("Opcao invalida! Digite apenas 1 ou 0.\n");
+            }
+        } while (continuar != 0 && continuar != 1);
+
+    } while (continuar == 1);
 }
 
 //CASE 4 - ATUALIZA O CHAMADO
