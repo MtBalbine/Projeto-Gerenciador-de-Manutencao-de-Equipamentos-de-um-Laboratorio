@@ -566,7 +566,7 @@ Chamados *LimparListaChamados(Chamados *listachamados)
     return NULL;
 }
 
-//case 2 listagem da ordem de mautenção
+//CASE 2 listagem da ordem de mautenção
 // Compara dois nós pela urgencia: prioridade, depois periodo, depois codigo.
 // Retorna <0 se 'a' vem antes de 'b', >0 se depois, 0 se iguais.
 // Exibe todas as solicitações cadastradas na ordem da lista principal (por código de solicitação)
@@ -693,6 +693,7 @@ void exibirOrdemManutencao(Chamados *lista)
     LimparListaChamados(aux);
     system("pause");
 }
+// FIM DO CASE 2
 
 // CASE 5 - EXCLUIR CHAMADO
 /*
