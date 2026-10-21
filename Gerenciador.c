@@ -57,7 +57,7 @@ int main()
 
                     if (subOpcao == 1)
                     {
-                        ExibirListaGeral(lista);
+                        ExibirListaGeral(lista, "===== LISTA GERAL DE SOLICITACOES =====");
                     }
                     else if (subOpcao == 2)
                     {
