@@ -83,7 +83,7 @@ int main()
                 system("pause");
                 break;
 
-            case 6:
+            case 5:
                 // Funcao da biblioteca: excluir chamado
                 // Remove o chamado da lista de manutencao.
                 // Pode ser por codigo da solicitacao.
