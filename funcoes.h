@@ -482,78 +482,8 @@ Chamados *AlterarPrioridade (Chamados *lista)
     printf("\n Prioridade e periodo atualizados com sucesso.\n");
     return lista;
 }
+// FIM DE CASE 4
 
-// CASE 5 - EXCLUIR CHAMADO
-/*
-Entrada: lista.
-Funções:
-    ExcluirChamado: tem a entrada de uma lista, solicita o código do chamado a ser excluido,
-    verifica se o codigo existe chmando a função CodigoSolicitacaoExiste e por fim, se existir,
-    procura o chamado na lista e o exclui.
-Saida: Lista nova com o chamado solicitado excluido.
-*/
-
-Chamados* ExcluirChamado(Chamados *lista)
-{
-    if(verificaVazia(lista))
-    {
-        printf("\n Lista Vazia, impossivel realizar a operacao.");
-        return lista;
-    }
-    int op,cod;
-    printf("\n Deseja digitar o codigo de solicitacao direto ou visualizar a lista de chamar? \n 1 - Visualizar lista de chamados. \n 2 - Digitar diretamente o codigo.\n")
-    if(op==1)
-    {
-        ExibirListaGeral(lista);
-    }
-    printf("\n Digite o codigo de solicitacao do chamado que deseja excluir: ");
-    scanf("%d", &cod);
-    if(CodigoSolicitacaoExiste(lista,cod))
-    {
-        Dados *aux1=lista->inicio;
-        Dados *aux2=lista->inicio;
-        while(aux1->codigoSolicitacao!=cod)
-        {
-            aux2=aux1;
-            aux1=aux1->prox;
-        }
-        int conf;
-        printf("\n Confirme se este eh o chamado que deseja excluir:\n \n Cod Solicitacao: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias \n",
-               aux1->codigoSolicitacao,
-               aux1->codigoEquipamento,
-               aux1->nomeEquipamento,
-               aux1->prioridade,
-               aux1->periodo);
-               printf("\n 1 - SIM \n 2 - NAO \n Resposta:");
-               scanf("%d", &conf);
-         if(conf==1)
-             {
-            if(aux1 == lista->inicio)
-            {
-                lista->inicio = aux1->prox;
-            }
-            else
-            {
-            aux2->prox=aux1->prox;
-            }
-            free(aux1);
-            printf("\n Chamado excluido com sucesso! \n");
-
-         }
-         else
-        {
-            printf("\n Operacao cancelada.\n");
-         }
-        system("pause");
-        return lista;
-
-    }
-    printf("\n Codigo nao existe na lista. \n");
-        system("pause");
-        return lista;
-
-}
-// FIM DO CASE 5
 
 // CASE 0 - SAIR DO PROGRAMA
 //Descrição: Função de exclusão de lista de chamados.
@@ -703,5 +633,81 @@ void exibirOrdemManutencao(Chamados *lista)
     LimparListaChamados(aux);
     system("pause");
 }
+
+// CASE 5 - EXCLUIR CHAMADO
+/*
+Entrada: lista.
+Funções:
+    ExcluirChamado: tem a entrada de uma lista, solicita o código do chamado a ser excluido,
+    verifica se o codigo existe chmando a função CodigoSolicitacaoExiste e por fim, se existir,
+    procura o chamado na lista e o exclui.
+Saida: Lista nova com o chamado solicitado excluido.
+*/
+
+Chamados* ExcluirChamado(Chamados *lista)
+{
+    if(verificaVazia(lista))
+    {
+        printf("\n Lista Vazia, impossivel realizar a operacao.");
+        return lista;
+    }
+    int op,cod;
+    printf("\n Deseja digitar o codigo de solicitacao direto ou visualizar a lista de chamar? \n 1 - Visualizar lista de chamados. \n 2 - Digitar diretamente o codigo.\n");
+    printf("/n Digite a opcao: ");
+    scanf("%d", &op);
+
+    if(op==1)
+    {
+        ExibirListaGeral(lista);
+    }
+    printf("\n Digite o codigo de solicitacao do chamado que deseja excluir: ");
+    scanf("%d", &cod);
+    if(CodigoSolicitacaoExiste(lista,cod))
+    {
+        Dados *aux1=lista->inicio;
+        Dados *aux2=lista->inicio;
+        while(aux1->codigoSolicitacao!=cod)
+        {
+            aux2=aux1;
+            aux1=aux1->prox;
+        }
+        int conf;
+        printf("\n Confirme se este eh o chamado que deseja excluir:\n \n Cod Solicitacao: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias \n",
+               aux1->codigoSolicitacao,
+               aux1->codigoEquipamento,
+               aux1->nomeEquipamento,
+               aux1->prioridade,
+               aux1->periodo);
+               printf("\n 1 - SIM \n 2 - NAO \n Resposta:");
+               scanf("%d", &conf);
+         if(conf==1)
+             {
+            if(aux1 == lista->inicio)
+            {
+                lista->inicio = aux1->prox;
+            }
+            else
+            {
+            aux2->prox=aux1->prox;
+            }
+            free(aux1);
+            printf("\n Chamado excluido com sucesso! \n");
+
+         }
+         else
+        {
+            printf("\n Operacao cancelada.\n");
+         }
+        system("pause");
+        return lista;
+
+    }
+    printf("\n Codigo nao existe na lista. \n");
+        system("pause");
+        return lista;
+
+}
+// FIM DO CASE 5
+
 
 #endif // FUNCOES_H_INCLUDED
