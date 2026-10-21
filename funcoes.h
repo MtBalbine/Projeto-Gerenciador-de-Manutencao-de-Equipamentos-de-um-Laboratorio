@@ -364,6 +364,66 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 }
 //FIM CASE 1
 
+// CASE 3 - BUSCAR CHAMADO
+////Procura o chamado na lista de chamado já feita apartir de um codigo digitado pelo usuario,
+////imprime na tela se não achar o chamado e se existir mostra o nome do equipamento, o codigo do chamado,
+////a prioridade e o periodo do equipamento.
+void ConsultarChamado(Chamados *lista)
+{
+    if (verificaVazia(lista)) {
+        printf("\nLista Vazia.\n");
+        system("pause");
+        return;
+    }
+
+    int CodSolic;
+    int continuar;
+
+    do
+    {
+        system("cls");
+        printf("\n--- Consultar Chamado ---\n");
+
+        printf("Digite o codigo do chamado que deseja consultar (4 digitos): ");
+        scanf("%d", &CodSolic);
+        while(QuantCod(CodSolic) != 4)
+        {
+            printf("Formato incorreto! Digite novamente um codigo que possua 4 digitos: ");
+            scanf("%d", &CodSolic);
+        }
+
+        Dados *atual = lista -> inicio;
+        int encontrou = 0;
+
+        while(atual != NULL)
+        {
+            if(atual -> codigoSolicitacao == CodSolic)
+            {
+                printf("\n-- Detalhes do Chamado --\n");
+                printf("Codigo do Chamado: %d\n", atual->codigoSolicitacao);
+                printf("Equipamento: %s (%s)\n", atual->nomeEquipamento, atual->codigoEquipamento);
+                printf("Prioridade: %d | Periodo: %d dias\n", atual->prioridade, atual->periodo);
+
+                encontrou = 1; // Marca que encontrou
+                break; // Para de procurar na lista
+            }
+            atual = atual -> prox;
+        }
+        if (encontrou == 0) {
+            printf("\nChamado nao encontrado.\n");
+    }
+    do {
+            printf("\nDeseja procurar outro codigo? (1 - Sim / 0 - Voltar ao Menu): ");
+            scanf("%d", &continuar);
+
+            if (continuar != 0 && continuar != 1) {
+                printf("Opcao invalida! Digite apenas 1 ou 0.\n");
+            }
+        } while (continuar != 0 && continuar != 1);
+
+    } while (continuar == 1);
+}
+// FIM CASE 3
 
 //CASE 4 - ATUALIZA O CHAMADO
 ////Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
