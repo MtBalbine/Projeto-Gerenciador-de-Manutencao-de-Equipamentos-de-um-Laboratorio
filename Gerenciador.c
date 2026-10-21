@@ -71,6 +71,7 @@ int main()
                 // Funcao da biblioteca: buscar chamado
                 // Pesquisa um chamado pelo codigo do equipamento ou codigo da solicitacao.
                 // Deve retornar as informacoes do registro encontrado.
+                ConsultarChamado(lista);
                 break;
 
             case 4:
@@ -82,7 +83,7 @@ int main()
                 system("pause");
                 break;
 
-            case 5:
+            case 6:
                 // Funcao da biblioteca: excluir chamado
                 // Remove o chamado da lista de manutencao.
                 // Pode ser por codigo da solicitacao.
