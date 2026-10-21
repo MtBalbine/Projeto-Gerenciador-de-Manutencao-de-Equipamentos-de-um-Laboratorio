@@ -401,8 +401,7 @@ void ConsultarChamado(Chamados *lista)
             {
                 printf("\n-- Detalhes do Chamado --\n");
                 printf("Codigo do Chamado: %d\n", atual->codigoSolicitacao);
-                printf("Nome do Equipamento: %s \n", atual->nomeEquipamento);
-                printf("Codigo do Equipamento: %s\n", atual->codigoEquipamento);
+                printf("Equipamento: %s (%s)\n", atual->nomeEquipamento, atual->codigoEquipamento);
                 printf("Prioridade: %d | Periodo: %d dias\n", atual->prioridade, atual->periodo);
 
                 encontrou = 1; // Marca que encontrou
