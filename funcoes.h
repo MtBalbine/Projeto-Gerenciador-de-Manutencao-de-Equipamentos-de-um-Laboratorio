@@ -500,7 +500,12 @@ Chamados* ExcluirChamado(Chamados *lista)
         printf("\n Lista Vazia, impossivel realizar a operacao.");
         return lista;
     }
-    int cod;
+    int op,cod;
+    printf("\n Deseja digitar o codigo de solicitacao direto ou visualizar a lista de chamar? \n 1 - Visualizar lista de chamados. \n 2 - Digitar diretamente o codigo.\n")
+    if(op==1)
+    {
+        ExibirListaGeral(lista);
+    }
     printf("\n Digite o codigo de solicitacao do chamado que deseja excluir: ");
     scanf("%d", &cod);
     if(CodigoSolicitacaoExiste(lista,cod))
