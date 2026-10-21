@@ -47,8 +47,8 @@ int main()
                 {
                     system ("cls");
                     printf("\n===== MENU DE LISTAGEM =====\n");
-                    printf("1 - Exibir ordem de realizacao da manutencao (por urgencia)\n");
-                    printf("2 - Exibir todas as solicitacoes cadastradas (por codigo)\n");
+                    printf("1 - Exibir todas as solicitacoes cadastradas \n");
+                    printf("2 - Exibir ordem de realizacao da manutencao (por urgencia)\n");
                     printf("0 - Voltar ao menu principal\n");
                     printf("Escolha uma opcao: ");
 
@@ -57,11 +57,11 @@ int main()
 
                     if (subOpcao == 1)
                     {
-                        exibirOrdemManutencao(lista);
+                        ExibirListaGeral(lista);
                     }
                     else if (subOpcao == 2)
                     {
-                        ExibirListaGeral(lista);
+                        exibirOrdemManutencao(lista);
                     }
                 }while (subOpcao != 0);
             break;
