@@ -686,8 +686,8 @@ Entrada: lista.
 Funções:
     ExcluirChamado: tem a entrada de uma lista, solicita o código do chamado a ser excluído,
     verifica se o código existe chmando a função CodigoSolicitacaoExiste e por fim, se existir,
-    procura o chamado na lista e o exclui.
-Saida: Lista nova com o chamado solicitado excluido.
+    procura o chamado na lista e o excluí.
+Saida: Lista nova com o chamado solicitado excluído.
 */
 
 Chamados* ExcluirChamado(Chamados *lista)
@@ -699,15 +699,15 @@ Chamados* ExcluirChamado(Chamados *lista)
         return lista;
     }
     int op,cod;
-    printf("\n Deseja digitar o codigo de solicitacao direto ou visualizar a lista de chamar? \n 1 - Visualizar lista de chamados. \n 2 - Digitar diretamente o codigo.\n");
-    printf("/n Digite a opcao: ");
+    printf("\n Deseja digitar o código de solicitação direto ou visualizar a lista de chamar? \n 1 - Visualizar lista de chamados. \n 2 - Digitar diretamente o código.\n");
+    printf("/n Digite a opção: ");
     scanf("%d", &op);
 
     if(op==1)
     {
-        ExibirListaGeral(lista,"===== LISTA GERAL DE SOLICITACOES =====");
+        ExibirListaGeral(lista,"===== LISTA GERAL DE SOLICITAÇÕES =====");
     }
-    printf("\n Digite o codigo de solicitacao do chamado que deseja excluir: ");
+    printf("\n Digite o codigo de solicitação do chamado que deseja excluir: ");
     scanf("%d", &cod);
     if(CodigoSolicitacaoExiste(lista,cod))
     {
@@ -719,13 +719,13 @@ Chamados* ExcluirChamado(Chamados *lista)
             aux1=aux1->prox;
         }
         int conf;
-        printf("\n Confirme se este eh o chamado que deseja excluir:\n \n Cod Solicitacao: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias \n",
+        printf("\n Confirme se este é o chamado que deseja excluir:\n \n Cod Solicitação: %d | Equip: %s | Nome: %s | Prio: %d | Período: %d dias \n",
                aux1->codigoSolicitacao,
                aux1->codigoEquipamento,
                aux1->nomeEquipamento,
                aux1->prioridade,
                aux1->periodo);
-               printf("\n 1 - SIM \n 2 - NAO \n Resposta:");
+               printf("\n 1 - SIM \n 2 - NÃO \n Resposta:");
                scanf("%d", &conf);
          if(conf==1)
              {
