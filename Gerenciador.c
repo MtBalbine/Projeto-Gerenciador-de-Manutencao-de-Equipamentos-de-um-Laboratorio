@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
+#include <windows.h>
 #include "funcoes.h"
 
 int main()
 {
-    setlocale(LC_ALL, "portuguese");
+    SetConsoleOutputCP(CP_UTF8);
 
     int opcao = 0;
 
@@ -22,7 +22,7 @@ int main()
         printf("4 - Atualizar chamado\n"); //matheus                           4 -  Alterar a prioridade e/ou per�odo de uma Solicita��o
         printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicita��o
         printf("0 - Sair\n"); // so -                                          0 - Finaliza
-        printf("Escolha uma opcao: ");
+        printf("Escolha uma opção: ");
         scanf("%d", &opcao);
         getchar();
 
@@ -99,7 +99,7 @@ int main()
                 }
                     ExcluirChamado(lista);
                     system ("cls");
-                    printf("\n Deseja excluir mais algum chamado?\n 1 - SIM \n 2 - NAO \n Resposta:");
+                    printf("\n Deseja excluir mais algum chamado?\n 1 - SIM \n 2 - NÃO \n Resposta:");
                     scanf("%d", &excluir);
                 }while(excluir==1);
                 break;

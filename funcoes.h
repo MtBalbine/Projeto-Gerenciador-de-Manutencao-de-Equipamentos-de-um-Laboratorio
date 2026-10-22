@@ -24,7 +24,7 @@
      /*
         Codigo da solicitação: (int 4 caracteres)
 
-        Código do Equipamento: (string 3 caracteres; 3 numeros)
+        Código do Equipamento: (string 3 caracteres; 3 números)
 
         Nome do equipamento: (string - 20 caracteres (MAX))
 
@@ -105,18 +105,18 @@ int LerCodigoEquipamento(char codigo[])
     int tamanho = 0;
     int valido = 1;
 
-    // Se o primeiro caractere lido for uma nova linha, lê o próximo caractere.
+    // Se o primeiro caráctere lido for uma nova linha, lê o próximo caractere.
     if (caractere == '\n')
     {
         caractere = getchar();
     }
 
-    // Lê os caracteres até encontrar EOF ou uma nova linha.
+    // Lê os carácteres até encontrar EOF ou uma nova linha.
     while (caractere != EOF && caractere != '\n')
     {
         if (tamanho < 6) // Verifica se ainda não atingiu o tamanho máximo do código (6 caracteres)
         {
-            if (tamanho < 3) // Para os três primeiros caracteres, espera-se letras
+            if (tamanho < 3) // Para os três primeiros carácteres, espera-se letras
             {
                 if (isalpha((unsigned char)caractere))
                 {
@@ -124,7 +124,7 @@ int LerCodigoEquipamento(char codigo[])
                 }
                 else
                 {
-                    codigo[tamanho] = (char)caractere; // char = converte para caractere, caso não seja letra, mantém o caractere original
+                    codigo[tamanho] = (char)caractere; // char = converte para caráctere, caso não seja letra, mantém o caráctere original
                     valido = 0;
                 }
             }
@@ -260,36 +260,36 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     // Solicita outro código enquanto já existir uma solicitação com esse número.
     while (CodigoSolicitacaoExiste(anterior, codSolic))
     {
-        printf("\n Esse codigo de solicitacao ja existe. Digite outro codigo: ");
+        printf("\n Esse código de solicitação já existe. Digite outro código: ");
         scanf("%d", &codSolic);
         while(QuantCod(codSolic)!=4)
         {
-            printf("\n Formato de codigo incorreto! Digite novamente o código;");
+            printf("\n Formato de código incorreto! Digite novamente o código;");
             scanf("%d", &codSolic);
         }
     }
 
-    // Solicita o código do equipamento e repete a leitura até validar o formato.
-    printf("\n Formato do codigo do equipamento: 3 letras e 3 digitos (ex: ABC123)");
-    printf("\n Codigo do equipamento: ");
-    while (!LerCodigoEquipamento(codEquip)) // Lê o código do equipamento e valida o formato
+    // Solicita o código do equipamento e repete a leitura até válidar o formato.
+    printf("\n Formato do código do equipamento: 3 letras e 3 dígitos (ex: ABC123)");
+    printf("\n Código do equipamento: ");
+    while (!LerCodigoEquipamento(codEquip)) // Lê o código do equipamento e válida o formato
     {
-        printf("\n Codigo invalido! Digite 3 letras seguidas de 3 numeros (ex: ABC123): ");
+        printf("\n Código inválido! Digite 3 letras seguidas de 3 números (ex: ABC123): ");
     }
 
 
     // Lê o nome com limite de tamanho para não ultrapassar o vetor.
-    printf("\n Formato do nome do equipamento: até 20 caracteres (ex: Microscópio)");
+    printf("\n Formato do nome do equipamento: até 20 carácteres (ex: Microscópio)");
     int tamanhoNome;
     do
     {
         printf("\n Nome do equipamento: ");
-        if (fgets(nomeEquip, sizeof(nomeEquip), stdin) == NULL) // fgets= le nome equip, sizeof= tamanho do nome, stdin= entrada padrão
+        if (fgets(nomeEquip, sizeof(nomeEquip), stdin) == NULL) // fgets= lê nome equip, sizeof= tamanho do nome, stdin= entrada padrão
         {
             return;
         }
 
-        // Mede o nome para validar o limite de 20 caracteres.
+        // Mede o nome para válidar o limite de 20 caracteres.
         tamanhoNome = (int)strlen(nomeEquip);
 
         // Remove a quebra de linha; se exceder o campo, descarta o restante da linha.
@@ -312,12 +312,12 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 
         if (tamanhoNome == 0 || tamanhoNome > 20)
         {
-            printf("\n Formato de nome incorreto! Digite novamente o nome (ate 20 caracteres).\n");
+            printf("\n Formato de nome incorreto! Digite novamente o nome (ate 20 carácteres).\n");
         }
     }
     while (tamanhoNome == 0 || tamanhoNome > 20);
 
-    // Solicita e valida o nível de prioridade escolhido pelo usuário.
+    // Solicita e válida o nível de prioridade escolhido pelo usuário.
     do
     {
         printf("\n Prioridade (1, 2 ou 3): ");
@@ -354,8 +354,8 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     InsereChamadoOrdenado(anterior, codSolic, codEquip, nomeEquip, prioridade, prazo);
 
     printf("\n Chamado cadastrado com sucesso!\n");
-    printf("\n Codigo do chamado: %d", codSolic);
-    printf("\n Codigo do equipamento: %s", codEquip);
+    printf("\n Código do chamado: %d", codSolic);
+    printf("\n Código do equipamento: %s", codEquip);
     printf("\n Nome do equipamento: %s", nomeEquip);
     printf("\n Prioridade do equipamento: %d", prioridade);
     printf("\n Prazo do equipamento: %d", prazo);
@@ -387,11 +387,11 @@ void ConsultarChamado(Chamados *lista)
                 return;
             }
 
-        printf("Digite o codigo do chamado que deseja consultar (4 digitos): ");
+        printf("Digite o código do chamado que deseja consultar (4 dígitos): ");
         scanf("%d", &CodSolic);
         while(QuantCod(CodSolic) != 4)
         {
-            printf("Formato incorreto! Digite novamente um codigo que possua 4 digitos: ");
+            printf("Formato incorreto! Digite novamente um código que possua 4 dígitos: ");
             scanf("%d", &CodSolic);
         }
 
@@ -404,10 +404,10 @@ void ConsultarChamado(Chamados *lista)
             if(atual -> codigoSolicitacao == CodSolic)
             {
                 printf("\n-- Detalhes do Chamado --\n");
-                printf("Codigo do Chamado: %d\n", atual->codigoSolicitacao);
+                printf("Código do Chamado: %d\n", atual->codigoSolicitacao);
                 printf("Nome do Equipamento: %s\n", atual->nomeEquipamento);
-                printf("Codigo do Equipamento: %s\n", atual->codigoEquipamento);
-                printf("Prioridade: %d | Periodo: %d dias\n", atual->prioridade, atual->periodo);
+                printf("Código do Equipamento: %s\n", atual->codigoEquipamento);
+                printf("Prioridade: %d | Período: %d dias\n", atual->prioridade, atual->periodo);
 
                 encontrou = 1; // Marca que encontrou
                 break; // Para de procurar na lista
@@ -415,14 +415,14 @@ void ConsultarChamado(Chamados *lista)
             atual = atual -> prox;
         }
         if (encontrou == 0) {
-            printf("\nChamado nao encontrado.\n");
+            printf("\nChamado não encontrado.\n");
     }
     do {
-            printf("\nDeseja procurar outro codigo? (1 - Sim / 0 - Voltar ao Menu): ");
+            printf("\nDeseja procurar outro código? (1 - Sim / 0 - Voltar ao Menu): ");
             scanf("%d", &continuar);
 
             if (continuar != 0 && continuar != 1) {
-                printf("Opcao invalida! Digite apenas 1 ou 0.\n");
+                printf("Opcao inválida! Digite apenas 1 ou 0.\n");
             }
         } while (continuar != 0 && continuar != 1);
 
@@ -454,8 +454,8 @@ Chamados *LimparListaChamados(Chamados *listachamados)
     return NULL;
 }
 
-//CASE 2 listagem da ordem de mautenção
-// Compara dois nós pela urgencia: prioridade, depois periodo, depois codigo.
+//CASE 2 listagem da ordem de manutenção
+// Compara dois nós pela urgencia: prioridade, depois período, depois código.
 // Retorna <0 se 'a' vem antes de 'b', >0 se depois, 0 se iguais.
 // Exibe todas as solicitações cadastradas na ordem da lista principal (por código de solicitação)
 void ExibirListaGeral(Chamados *lista, char *titulo)
@@ -471,7 +471,7 @@ void ExibirListaGeral(Chamados *lista, char *titulo)
     Dados *atual = lista->inicio;
     while (atual != NULL)
     {
-        printf("Cod Solicitação: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias\n",
+        printf("Cod Solicitação: %d | Equip: %s | Nome: %s | Prio: %d | Período: %d dias\n",
                atual->codigoSolicitacao,
                atual->codigoEquipamento,
                atual->nomeEquipamento,
@@ -489,15 +489,15 @@ int CompararUrgencia(Dados *a, Dados *b)
     if (a->prioridade != b->prioridade)
         return a->prioridade - b->prioridade;
 
-    // 2) Periodo (menor periodo = mais urgente)
+    // 2) Período (menor periodo = mais urgente)
     if (a->periodo != b->periodo)
         return a->periodo - b->periodo;
 
-    // 3) Codigo de solicitacao (desempate)
+    // 3) Código de solicitação (desempate)
         return a->codigoSolicitacao - b->codigoSolicitacao;
 }
 
-// Insere um no ja criado na lista auxiliar, mantendo-a ordenada por urgencia.
+// Insere um no já criado na lista auxiliar, mantendo-a ordenada por urgência.
 void InsereOrdenadoUrgencia(Chamados *lista, Dados *novo)
 {
     Dados *anterior = NULL;
@@ -516,13 +516,13 @@ void InsereOrdenadoUrgencia(Chamados *lista, Dados *novo)
         anterior->prox = novo;
 }
 
-// Exibe a ordem de manutencao SEM alterar a lista principal.
+// Exibe a ordem de manutenção SEM alterar a lista principal.
 void exibirOrdemManutencao(Chamados *lista)
 {
     // 1) Cria lista auxiliar vazia
     Chamados *aux = InicializaListaChamado();
 
-    // 2) Percorre a principal e insere copias na auxiliar de forma ordenada
+    // 2) Percorre a principal e insere cópias na auxiliar de forma ordenada
     Dados *atual = lista->inicio;
     while (atual != NULL)
     {
@@ -567,7 +567,7 @@ void exibirOrdemManutencao(Chamados *lista)
 // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
 
 // Print da lista o [codigoSolictacao ; prioridade] - Nome do equipamento
-// Retorna a posicao que deseja alterar
+// Retorna a posição que deseja alterar
 Dados* MenuAtualizarChamado(Chamados *lista)
 {
     printf("======== ATUALIZAR CHAMADO ========\n");
@@ -587,7 +587,7 @@ Dados* MenuAtualizarChamado(Chamados *lista)
 
     do
     {
-        printf("\n Selecione o codigo da solicitacao: ");
+        printf("\n Selecione o código da solicitação: ");
         scanf("%d", &codigoSelecionado);
 
         aux = lista->inicio;
@@ -598,7 +598,7 @@ Dados* MenuAtualizarChamado(Chamados *lista)
 
         if (aux == NULL)
         {
-            printf("\n Codigo nao encontrado. Tente novamente.\n");
+            printf("\n Código não encontrado. Tente novamente.\n");
             validade = 0;
         }
         else
@@ -641,7 +641,7 @@ Chamados *AlterarPrioridade (Chamados *lista)
         scanf("%d", &prioridadeNova);
         if (prioridadeNova < 1 || prioridadeNova > 3)
         {
-            printf("\n Prioridade invalida. Digite 1, 2 ou 3.\n");
+            printf("\n Prioridade inválida. Digite 1, 2 ou 3.\n");
         }
     }
     while (prioridadeNova < 1 || prioridadeNova > 3); // Loop para garantir que a prioridade seja válida (1, 2 ou 3)
@@ -661,11 +661,11 @@ Chamados *AlterarPrioridade (Chamados *lista)
 
     do
     {
-        printf("\n Alterar periodo para (1 a %d dias): ", periodoMaximo);
+        printf("\n Alterar período para (1 a %d dias): ", periodoMaximo);
         scanf("%d", &periodoNovo);
         if (periodoNovo < 1 || periodoNovo > periodoMaximo)
         {
-            printf("\n Periodo invalido para essa prioridade.\n");
+            printf("\n Período inválido para essa prioridade.\n");
         }
     }
     while (periodoNovo < 1 || periodoNovo > periodoMaximo);
@@ -673,7 +673,7 @@ Chamados *AlterarPrioridade (Chamados *lista)
     aux->prioridade = prioridadeNova;
     aux->periodo = periodoNovo;
 
-    printf("\n Prioridade e periodo atualizados com sucesso.\n");
+    printf("\n Prioridade e período atualizados com sucesso.\n");
     return lista;
 }
 // FIM DE CASE 4
@@ -683,8 +683,8 @@ Chamados *AlterarPrioridade (Chamados *lista)
 /*
 Entrada: lista.
 Funções:
-    ExcluirChamado: tem a entrada de uma lista, solicita o código do chamado a ser excluido,
-    verifica se o codigo existe chmando a função CodigoSolicitacaoExiste e por fim, se existir,
+    ExcluirChamado: tem a entrada de uma lista, solicita o código do chamado a ser excluído,
+    verifica se o código existe chmando a função CodigoSolicitacaoExiste e por fim, se existir,
     procura o chamado na lista e o exclui.
 Saida: Lista nova com o chamado solicitado excluido.
 */
@@ -694,7 +694,7 @@ Chamados* ExcluirChamado(Chamados *lista)
     printf("======== EXCLUIR CHAMADO ========\n");
     if(verificaVazia(lista))
     {
-        printf("\n Lista Vazia, impossivel realizar a operacao.");
+        printf("\n Lista Vazia, impossível realizar a operação.");
         return lista;
     }
     int op,cod;
