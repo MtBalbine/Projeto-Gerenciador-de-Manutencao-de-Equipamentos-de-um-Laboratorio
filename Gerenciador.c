@@ -61,8 +61,9 @@ int main()
                     }
                     else if (subOpcao == 2)
                     {
-                        ExibirListaGeral(lista);
+                        ExibirListaGeral(lista,"======== ORDEM DE MANUTENCAO GERAL ========\n");
                     }
+                    system("pause");
                 }while (subOpcao != 0);
             break;
             }

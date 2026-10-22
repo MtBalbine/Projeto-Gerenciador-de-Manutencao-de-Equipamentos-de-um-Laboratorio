@@ -246,6 +246,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     char codEquip[7];
     char nomeEquip[21];
 
+    printf("======== NOVO CHAMADO ========\n");
     // Solicita o código da solicitação e exige que ele tenha quatro dígitos.
     printf("\n Formato do codigo do chamado: 4 digitos (ex: 1234)");
     printf("\n Codigo do chamado: ");
@@ -283,7 +284,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     do
     {
         printf("\n Nome do equipamento: ");
-        if (fgets(nomeEquip, sizeof(nomeEquip), stdin) == NULL) // fgets= le nome equipe, sizeof= tamanho do nome, stdin= entrada padrão
+        if (fgets(nomeEquip, sizeof(nomeEquip), stdin) == NULL) // fgets= le nome equip, sizeof= tamanho do nome, stdin= entrada padrão
         {
             return;
         }
@@ -370,11 +371,6 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 ////a prioridade e o periodo do equipamento.
 void ConsultarChamado(Chamados *lista)
 {
-    if (verificaVazia(lista)) {
-        printf("\nLista Vazia.\n");
-        system("pause");
-        return;
-    }
 
     int CodSolic;
     int continuar;
@@ -382,7 +378,14 @@ void ConsultarChamado(Chamados *lista)
     do
     {
         system("cls");
-        printf("\n--- Consultar Chamado ---\n");
+        printf("======== DETALHES DO CHAMADO ========\n");
+
+        if (verificaVazia(lista))
+            {
+                printf("\nLista Vazia.\n");
+                system("pause");
+                return;
+            }
 
         printf("Digite o codigo do chamado que deseja consultar (4 digitos): ");
         scanf("%d", &CodSolic);
@@ -391,6 +394,7 @@ void ConsultarChamado(Chamados *lista)
             printf("Formato incorreto! Digite novamente um codigo que possua 4 digitos: ");
             scanf("%d", &CodSolic);
         }
+
 
         Dados *atual = lista -> inicio;
         int encontrou = 0;
@@ -401,7 +405,8 @@ void ConsultarChamado(Chamados *lista)
             {
                 printf("\n-- Detalhes do Chamado --\n");
                 printf("Codigo do Chamado: %d\n", atual->codigoSolicitacao);
-                printf("Equipamento: %s (%s)\n", atual->nomeEquipamento, atual->codigoEquipamento);
+                printf("Nome do Equipamento: %s\n", atual->nomeEquipamento);
+                printf("Codigo do Equipamento: %s\n", atual->codigoEquipamento);
                 printf("Prioridade: %d | Periodo: %d dias\n", atual->prioridade, atual->periodo);
 
                 encontrou = 1; // Marca que encontrou
@@ -425,6 +430,137 @@ void ConsultarChamado(Chamados *lista)
 }
 // FIM CASE 3
 
+
+
+
+// CASE 0 - SAIR DO PROGRAMA
+//Descrição: Função de exclusão de lista de chamados.
+//Ações: apaga lista e finaliza o programa.
+//Saída: valor NULL.
+
+Chamados *LimparListaChamados(Chamados *listachamados)
+{
+    if(listachamados!=NULL)
+    {
+        Dados *aux;
+        while(listachamados->inicio!=NULL)
+        {
+            aux=listachamados->inicio;
+            listachamados->inicio=aux->prox;
+            free(aux);
+        }
+    }
+    free(listachamados);
+    return NULL;
+}
+
+//CASE 2 listagem da ordem de mautenção
+// Compara dois nós pela urgencia: prioridade, depois periodo, depois codigo.
+// Retorna <0 se 'a' vem antes de 'b', >0 se depois, 0 se iguais.
+// Exibe todas as solicitações cadastradas na ordem da lista principal (por código de solicitação)
+void ExibirListaGeral(Chamados *lista, char *titulo)
+{
+    if (lista == NULL || verificaVazia(lista))
+    {
+        printf("\nNenhuma solicitação cadastrada.\n");
+        system("pause");
+        return;
+    }
+
+    printf("\n%s\n", titulo);
+    Dados *atual = lista->inicio;
+    while (atual != NULL)
+    {
+        printf("Cod Solicitação: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias\n",
+               atual->codigoSolicitacao,
+               atual->codigoEquipamento,
+               atual->nomeEquipamento,
+               atual->prioridade,
+               atual->periodo);
+        atual = atual->prox;
+    }
+    printf("==================================================\n\n");
+
+}
+
+int CompararUrgencia(Dados *a, Dados *b)
+{
+    // 1) Prioridade (menor numero = mais urgente)
+    if (a->prioridade != b->prioridade)
+        return a->prioridade - b->prioridade;
+
+    // 2) Periodo (menor periodo = mais urgente)
+    if (a->periodo != b->periodo)
+        return a->periodo - b->periodo;
+
+    // 3) Codigo de solicitacao (desempate)
+        return a->codigoSolicitacao - b->codigoSolicitacao;
+}
+
+// Insere um no ja criado na lista auxiliar, mantendo-a ordenada por urgencia.
+void InsereOrdenadoUrgencia(Chamados *lista, Dados *novo)
+{
+    Dados *anterior = NULL;
+    Dados *atual = lista->inicio;
+
+    while (atual != NULL && CompararUrgencia(atual, novo) < 0)
+    {
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    novo->prox = atual;
+    if (anterior == NULL)
+        lista->inicio = novo;
+    else
+        anterior->prox = novo;
+}
+
+// Exibe a ordem de manutencao SEM alterar a lista principal.
+void exibirOrdemManutencao(Chamados *lista)
+{
+    // 1) Cria lista auxiliar vazia
+    Chamados *aux = InicializaListaChamado();
+
+    // 2) Percorre a principal e insere copias na auxiliar de forma ordenada
+    Dados *atual = lista->inicio;
+    while (atual != NULL)
+    {
+        Dados *novo = (Dados*)malloc(sizeof(Dados));
+        if (novo == NULL) return; // Verificação de alocação de memória
+
+        novo->codigoSolicitacao = atual->codigoSolicitacao;
+        int i = 0;
+        while (atual->codigoEquipamento[i] != '\0')
+        {
+            novo->codigoEquipamento[i] = atual->codigoEquipamento[i];
+            i++;
+        }
+        novo->codigoEquipamento[i] = '\0';
+        i = 0;
+        while (atual->nomeEquipamento[i] != '\0')
+        {
+            novo->nomeEquipamento[i] = atual->nomeEquipamento[i];
+            i++;
+        }
+        novo->nomeEquipamento[i] = '\0';
+        novo->prioridade = atual->prioridade;
+        novo->periodo    = atual->periodo;
+        novo->prox       = NULL;
+
+        InsereOrdenadoUrgencia(aux, novo);
+
+        atual = atual->prox;
+    }
+
+    // 3) Chama a função de exibição passando a lista auxiliar
+    ExibirListaGeral(aux, "===== ORDEM DE MANUTENCAO (POR URGENCIA) =====");
+
+    // 4) Libera a auxiliar
+    LimparListaChamados(aux);
+}
+// FIM DO CASE 2
+
 //CASE 4 - ATUALIZA O CHAMADO
 ////Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
 //respeitando os limites do período associado a nova prioridade.
@@ -434,6 +570,7 @@ void ConsultarChamado(Chamados *lista)
 // Retorna a posicao que deseja alterar
 Dados* MenuAtualizarChamado(Chamados *lista)
 {
+    printf("======== ATUALIZAR CHAMADO ========\n");
     if (lista == NULL || verificaVazia(lista))
     {
         printf("\n Lista Vazia\n");
@@ -444,12 +581,9 @@ Dados* MenuAtualizarChamado(Chamados *lista)
     int codigoSelecionado;
     int validade = 0;
 
-    printf("\n Chamados cadastrados:");
-    while (aux != NULL)
-    {
-        printf("\n\t [%d ; %d] - %s", aux->codigoSolicitacao, aux->prioridade, aux->nomeEquipamento);
-        aux = aux->prox;
-    }
+
+    //Chama funcao para exibir chamado
+    ExibirListaGeral(lista, "======== CHAMADOS CADASTADOS ========");
 
     do
     {
@@ -545,155 +679,6 @@ Chamados *AlterarPrioridade (Chamados *lista)
 // FIM DE CASE 4
 
 
-// CASE 0 - SAIR DO PROGRAMA
-//Descrição: Função de exclusão de lista de chamados.
-//Ações: apaga lista e finaliza o programa.
-//Saída: valor NULL.
-
-Chamados *LimparListaChamados(Chamados *listachamados)
-{
-    if(listachamados!=NULL)
-    {
-        Dados *aux;
-        while(listachamados->inicio!=NULL)
-        {
-            aux=listachamados->inicio;
-            listachamados->inicio=aux->prox;
-            free(aux);
-        }
-    }
-    free(listachamados);
-    return NULL;
-}
-
-//case 2 listagem da ordem de mautenção
-// Compara dois nós pela urgencia: prioridade, depois periodo, depois codigo.
-// Retorna <0 se 'a' vem antes de 'b', >0 se depois, 0 se iguais.
-// Exibe todas as solicitações cadastradas na ordem da lista principal (por código de solicitação)
-void ExibirListaGeral(Chamados *lista)
-{
-    if (lista == NULL || verificaVazia(lista))
-    {
-        printf("\nNenhuma solicitacao cadastrada.\n");
-        system("pause");
-        return;
-    }
-
-    printf("\n===== LISTA GERAL DE SOLICITACOES (POR CODIGO) =====\n");
-    Dados *atual = lista->inicio;
-    while (atual != NULL)
-    {
-        printf("Cod Solicitacao: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias\n",
-               atual->codigoSolicitacao,
-               atual->codigoEquipamento,
-               atual->nomeEquipamento,
-               atual->prioridade,
-               atual->periodo);
-        atual = atual->prox;
-    }
-    printf("==================================================\n\n");
-    system("pause");
-}
-
-int CompararUrgencia(Dados *a, Dados *b)
-{
-    // 1) Prioridade (menor numero = mais urgente)
-    if (a->prioridade != b->prioridade)
-        return a->prioridade - b->prioridade;
-
-    // 2) Periodo (menor periodo = mais urgente)
-    if (a->periodo != b->periodo)
-        return a->periodo - b->periodo;
-
-    // 3) Codigo de solicitacao (desempate)
-        return a->codigoSolicitacao - b->codigoSolicitacao;
-}
-
-// Insere um no ja criado na lista auxiliar, mantendo-a ordenada por urgencia.
-void InsereOrdenadoUrgencia(Chamados *lista, Dados *novo)
-{
-    Dados *anterior = NULL;
-    Dados *atual = lista->inicio;
-
-    while (atual != NULL && CompararUrgencia(atual, novo) < 0)
-    {
-        anterior = atual;
-        atual = atual->prox;
-    }
-
-    novo->prox = atual;
-    if (anterior == NULL)
-        lista->inicio = novo;
-    else
-        anterior->prox = novo;
-}
-
-// Exibe a ordem de manutencao SEM alterar a lista principal.
-// Exibe a ordem de manutencao SEM alterar a lista principal.
-void exibirOrdemManutencao(Chamados *lista)
-{
-    // 1) Cria lista auxiliar vazia
-    Chamados *aux = InicializaListaChamado();
-
-    // 2) Percorre a principal e insere copias na auxiliar de forma ordenada
-    Dados *atual = lista->inicio;
-    while (atual != NULL)
-    {
-        Dados *novo = (Dados*)malloc(sizeof(Dados));
-        if (novo == NULL) return; // Verificação de alocação de memória
-
-        novo->codigoSolicitacao = atual->codigoSolicitacao;
-        int i = 0;
-        while (atual->codigoEquipamento[i] != '\0')
-        {
-            novo->codigoEquipamento[i] = atual->codigoEquipamento[i];
-            i++;
-        }
-        novo->codigoEquipamento[i] = '\0';
-        i = 0;
-        while (atual->nomeEquipamento[i] != '\0')
-        {
-            novo->nomeEquipamento[i] = atual->nomeEquipamento[i];
-            i++;
-        }
-        novo->nomeEquipamento[i] = '\0';
-
-        novo->prioridade = atual->prioridade;
-        novo->periodo    = atual->periodo;
-        novo->prox       = NULL;
-
-        InsereOrdenadoUrgencia(aux, novo);
-
-        atual = atual->prox;
-    }
-
-    // 3) Exibe a auxiliar
-    printf("\n===== ORDEM DE MANUTENCAO (POR URGENCIA) =====\n");
-    Dados *p = aux->inicio;
-    if (p == NULL)
-    {
-        printf("Nenhuma solicitacao cadastrada.\n");
-    }
-    else
-    {
-        while (p != NULL)
-        {
-            printf("Cod: %d | Equip: %s | Nome: %s | Prio: %d | Periodo: %d dias\n",
-                   p->codigoSolicitacao,
-                   p->codigoEquipamento,
-                   p->nomeEquipamento,
-                   p->prioridade,
-                   p->periodo);
-            p = p->prox;
-        }
-    }
-    printf("==========================================================================\n\n");
-
-    // 4) Libera a auxiliar
-    LimparListaChamados(aux);
-    system("pause");
-}
-
 // CASE 5 - EXCLUIR CHAMADO
 /*
 Entrada: lista.
@@ -706,6 +691,7 @@ Saida: Lista nova com o chamado solicitado excluido.
 
 Chamados* ExcluirChamado(Chamados *lista)
 {
+    printf("======== EXCLUIR CHAMADO ========\n");
     if(verificaVazia(lista))
     {
         printf("\n Lista Vazia, impossivel realizar a operacao.");
@@ -718,7 +704,7 @@ Chamados* ExcluirChamado(Chamados *lista)
 
     if(op==1)
     {
-        ExibirListaGeral(lista);
+        ExibirListaGeral(lista,"===== LISTA GERAL DE SOLICITACOES =====");
     }
     printf("\n Digite o codigo de solicitacao do chamado que deseja excluir: ");
     scanf("%d", &cod);
