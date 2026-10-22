@@ -63,6 +63,7 @@ int main()
                     {
                         exibirOrdemManutencao(lista);
                     }
+                    system("pause");
                 }while (subOpcao != 0);
             break;
             }
