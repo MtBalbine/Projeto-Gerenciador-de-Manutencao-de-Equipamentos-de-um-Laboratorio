@@ -246,7 +246,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     char codEquip[7];
     char nomeEquip[21];
 
-    printf("\n\n ========== NOVO CHAMADO ==========\n\n")
+    printf("\n\n ========== NOVO CHAMADO ==========\n\n");
 
     // Solicita o código da solicitação e exige que ele tenha quatro dígitos.
     printf("\n Formato do codigo do chamado: 4 digitos (ex: 1234)");
@@ -579,7 +579,7 @@ Dados* MenuAtualizarChamado(Chamados *lista)
     int codigoSelecionado;
     int validade = 0;
 
-    printf("\n\n ========== ATUALIZAR PRIORIDADE DO CHAMADO ==========\n\n")
+    printf("\n\n ========== ATUALIZAR PRIORIDADE DO CHAMADO ==========\n\n");
 
     //Chama funcao para exibir chamado
     ExibirListaGeral(lista, "======== CHAMADOS CADASTADOS ========");
