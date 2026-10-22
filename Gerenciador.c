@@ -19,7 +19,7 @@ int main()
         printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicita��o de Manuten��o
         printf("2 - Menu de listagem\n"); // lele -                             5 e 6 - Exibir a ordem da realiza��o da manuten��o e Exibir lista
         printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicita��o
-        printf("4 - Atualizar chamado\n"); //matheus                           4 -  Alterar a prioridade e/ou per�odo de uma Solicita��o
+        printf("4 - Atualizar prioridade do chamado\n"); //matheus                4 -  Alterar a prioridade e/ou per�odo de uma Solicita��o
         printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicita��o
         printf("0 - Sair\n"); // so -                                          0 - Finaliza
         printf("Escolha uma opcao: ");
