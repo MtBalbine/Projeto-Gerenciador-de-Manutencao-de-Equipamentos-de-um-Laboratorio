@@ -19,7 +19,7 @@ int main()
         printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicita��o de Manuten��o
         printf("2 - Menu de listagem\n"); // lele -                             5 e 6 - Exibir a ordem da realiza��o da manuten��o e Exibir lista
         printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicita��o
-        printf("4 - Atualizar chamado\n"); //matheus                           4 -  Alterar a prioridade e/ou per�odo de uma Solicita��o
+        printf("4 - Atualizar prioridade do chamado\n"); //matheus                4 -  Alterar a prioridade e/ou per�odo de uma Solicita��o
         printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicita��o
         printf("0 - Sair\n"); // so -                                          0 - Finaliza
         printf("Escolha uma opção: ");
@@ -47,8 +47,8 @@ int main()
                 {
                     system ("cls");
                     printf("\n===== MENU DE LISTAGEM =====\n");
-                    printf("1 - Exibir ordem de realizacao da manutencao (por urgencia)\n");
-                    printf("2 - Exibir todas as solicitacoes cadastradas (por codigo)\n");
+                    printf("1 - Exibir todas as solicitacoes cadastradas \n");
+                    printf("2 - Exibir ordem de realizacao da manutencao (por urgencia)\n");
                     printf("0 - Voltar ao menu principal\n");
                     printf("Escolha uma opcao: ");
 
@@ -57,11 +57,15 @@ int main()
 
                     if (subOpcao == 1)
                     {
-                        exibirOrdemManutencao(lista);
+                        ExibirListaGeral(lista, "===== LISTA GERAL DE SOLICITACOES =====");
                     }
                     else if (subOpcao == 2)
                     {
+<<<<<<< HEAD
                         ExibirListaGeral(lista,"======== ORDEM DE MANUTENCAO GERAL ========\n");
+=======
+                        exibirOrdemManutencao(lista);
+>>>>>>> origin/main
                     }
                     system("pause");
                 }while (subOpcao != 0);
