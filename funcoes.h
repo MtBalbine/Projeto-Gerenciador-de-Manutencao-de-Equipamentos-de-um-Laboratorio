@@ -326,7 +326,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
 
         if (prioridade <1 || prioridade > 3)
         {
-            printf("\n\t Valor inválido, tente novamente!\n");
+            printf("\n\t Prioridade inválida, tente novamente!\n");
         }
     }
     while (prioridade < 1 || prioridade > 3);
@@ -354,7 +354,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
            (prioridade == 2 && prazo > 15) ||
            (prioridade == 3 && prazo > 20))
            {
-               printf("\n\t Valor inválido, tente novamente!\n");
+               printf("\n\t Período inválido para essa prioridade!\n");
            }
 
     }
@@ -692,7 +692,7 @@ Chamados *AlterarPrioridade (Chamados *lista)
     aux->prioridade = prioridadeNova;
     aux->periodo = periodoNovo;
 
-    printf("\n Prioridade e período atualizados com sucesso.\n");
+    printf("\n Prioridade e período atualizados com sucesso.\n\n");
     return lista;
 }
 // FIM DE CASE 4
