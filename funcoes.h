@@ -265,7 +265,7 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
         scanf("%d", &codSolic);
         while(QuantCod(codSolic)!=4)
         {
-            printf("\n Formato de código incorreto! Digite novamente o código;");
+            printf("\n Formato de código incorreto! Digite novamente o código: ");
             scanf("%d", &codSolic);
         }
     }
@@ -323,6 +323,11 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
     {
         printf("\n Prioridade (1, 2 ou 3): ");
         scanf("%d", &prioridade);
+
+        if (prioridade <1 || prioridade > 3)
+        {
+            printf("\n\t Prioridade inválida, tente novamente!\n");
+        }
     }
     while (prioridade < 1 || prioridade > 3);
 
@@ -343,6 +348,15 @@ void NovoChamado(Chamados *anterior) // Função para cadastrar um novo chamado
         }
         printf("\n Quantos dias o equipamento fica parado: ");
         scanf("%d", &prazo);
+
+        if( prazo < 1 ||
+           (prioridade == 1 && prazo > 7) ||
+           (prioridade == 2 && prazo > 15) ||
+           (prioridade == 3 && prazo > 20))
+           {
+               printf("\n\t Período inválido para essa prioridade!\n");
+           }
+
     }
     while (prazo < 1 ||
            (prioridade == 1 && prazo > 7) ||
@@ -678,7 +692,7 @@ Chamados *AlterarPrioridade (Chamados *lista)
     aux->prioridade = prioridadeNova;
     aux->periodo = periodoNovo;
 
-    printf("\n Prioridade e período atualizados com sucesso.\n");
+    printf("\n Prioridade e período atualizados com sucesso.\n\n");
     return lista;
 }
 // FIM DE CASE 4
