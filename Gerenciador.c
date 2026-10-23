@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
+#include <windows.h>
 #include "funcoes.h"
 
 int main()
 {
-    setlocale(LC_ALL, "portuguese");
+    SetConsoleOutputCP(CP_UTF8);
 
     int opcao = 0;
 
@@ -16,13 +16,13 @@ int main()
         system ("cls");
 
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
-        printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicita��o de Manuten��o
-        printf("2 - Menu de listagem\n"); // lele -                             5 e 6 - Exibir a ordem da realiza��o da manuten��o e Exibir lista
-        printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicita��o
-        printf("4 - Atualizar prioridade do chamado\n"); //matheus                4 -  Alterar a prioridade e/ou per�odo de uma Solicita��o
-        printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicita��o
+        printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicitação de Manutenção
+        printf("2 - Menu de listagem\n"); // lele -                             5 e 6 - Exibir a ordem da realizaçao da manutenção e Exibir lista
+        printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicitação
+        printf("4 - Atualizar prioridade do chamado\n"); //matheus                4 -  Alterar a prioridade e/ou período de uma Solicitação
+        printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicitação
         printf("0 - Sair\n"); // so -                                          0 - Finaliza
-        printf("Escolha uma opcao: ");
+        printf("Escolha uma opção: ");
         scanf("%d", &opcao);
         getchar();
 
@@ -31,36 +31,37 @@ int main()
         switch (opcao)
         {
             case 1:
-                // Funcao da biblioteca: cadastrar novo chamado
-                // Cria um novo registro com codigo, equipamento, prioridade e prazo.
-                // Deve chamar a funcao de insercao na lista.
+                // Função da biblioteca: cadastrar novo chamado
+                // Cria um novo registro com código, equipamento, prioridade e prazo.
+                // Deve chamar a função de inserção na lista.
                 NovoChamado(lista);
                 break;
 
             case 2:
             {
-                // Funcao da biblioteca: listar todos os chamados
-                // Exibe os chamados ja cadastrados na estrutura de dados.
-                // Um sub menu para qual tipo de listagem o usuario deseja ver.
+                // Função da biblioteca: listar todos os chamados
+                // Exibe os chamados já cadastrados na estrutura de dados.
+                // Um sub menu para qual tipo de listagem o usuário deseja ver.
                 int subOpcao;
                 do
                 {
                     system ("cls");
                     printf("\n===== MENU DE LISTAGEM =====\n");
-                    printf("1 - Exibir todas as solicitacoes cadastradas \n");
-                    printf("2 - Exibir ordem de realizacao da manutencao (por urgencia)\n");
+                    printf("1 - Exibir todas as solicitações cadastradas \n");
+                    printf("2 - Exibir ordem de realização da manutenção (por urgência)\n");
                     printf("0 - Voltar ao menu principal\n");
-                    printf("Escolha uma opcao: ");
+                    printf("Escolha uma opção: ");
 
                     scanf("%d", &subOpcao);
                     getchar(); // Limpa o enter do buffer
 
                     if (subOpcao == 1)
                     {
-                        ExibirListaGeral(lista, "===== LISTA GERAL DE SOLICITACOES =====");
+                        ExibirListaGeral(lista, "===== LISTA GERAL DE SOLICITAÇÕES =====");
                     }
                     else if (subOpcao == 2)
                     {
+                        ExibirListaGeral(lista,"======== ORDEM DE MANUTENÇÃO GERAL ========\n");
                         exibirOrdemManutencao(lista);
                     }
                     system("pause");
@@ -76,30 +77,30 @@ int main()
                 break;
 
             case 4:
-                // Funcao da biblioteca: atualizar chamado
-                //Dado o c�digo de solicita��o o usu�rio pode alterar a prioridade e o per�odo dela,
-                //respeitando os limites do per�odo associado a nova prioridade.
+                // Função da biblioteca: atualizar chamado
+                //Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
+                //respeitando os limites do período associado a nova prioridade.
                 // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
                 AlterarPrioridade(lista);
                 system("pause");
                 break;
 
             case 5:
-                // Funcao da biblioteca: excluir chamado
-                // Remove o chamado da lista de manutencao.
-                // Pode ser por codigo da solicitacao.
+                // Função da biblioteca: excluir chamado
+                // Remove o chamado da lista de manutenção.
+                // Pode ser por código da solicitação.
                 int excluir;
                 do
                 {
                      if(verificaVazia(lista))
                 {
-                    printf("\n Lista vazia, impossivel prosseguir!\n");
+                    printf("\n Lista vazia, impossível prosseguir!\n");
                     system("pause");
                     break;
                 }
                     ExcluirChamado(lista);
                     system ("cls");
-                    printf("\n Deseja excluir mais algum chamado?\n 1 - SIM \n 2 - NAO \n Resposta:");
+                    printf("\n Deseja excluir mais algum chamado?\n 1 - SIM \n 2 - NÃO \n Resposta:");
                     scanf("%d", &excluir);
                 }while(excluir==1);
                 break;
@@ -110,7 +111,7 @@ int main()
                 break;
 
             default:
-                printf("\nOpcao invalida! Tente novamente.\n");
+                printf("\nOpção inválida! Tente novamente.\n");
                 break;
         }
 
