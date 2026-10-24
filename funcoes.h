@@ -7,16 +7,30 @@
 #include <stdlib.h>
 
 /*
-    Funções de Manipulação de Lista:
-    - InicializaListaChamado        alocam uma lista vazia.
-    - CriaChamado                   aloca e preenche um nó.
-    - CodigoSolicitacaoExiste       percorre a lista para localizar um código.
-    - InsereChamadoOrdenado         insere o novo nó na posição correta pelo código.
-    - NovoChamado                   coleta e valida os dados antes de inserir.
+    Manipulação da lista:
+    - InicializaListaChamado: cria e inicializa uma lista vazia.
+    - verificaVazia: verifica se a lista não contém chamados.
+    - CriaChamado: cria e preenche um novo chamado.
+    - InsereChamadoOrdenado: insere um chamado em ordem de código.
+    - LimparListaChamados: libera a memória ocupada pela lista.
 
-    Funções auxiliares do cadastro:
-    - QuantCod                      conta os dígitos do código da solicitação.
-    - LerCodigoEquipamento          valida o formato do código do equipamento.
+    Validação e cadastro:
+    - QuantCod: conta os dígitos de um código de solicitação.
+    - LerCodigoEquipamento: lê e valida um código de equipamento.
+    - CodigoSolicitacaoExiste: verifica se um código já está cadastrado.
+    - NovoChamado: coleta, valida e cadastra um novo chamado.
+
+    Consulta e listagem:
+    - ConsultarChamado: localiza e exibe um chamado pelo código.
+    - ExibirListaGeral: exibe os chamados na ordem da lista.
+    - CompararUrgencia: compara chamados por prioridade, período e código.
+    - InsereOrdenadoUrgencia: insere um chamado em ordem de urgência.
+    - exibirOrdemManutencao: exibe os chamados ordenados por urgência.
+
+    Atualização e exclusão:
+    - MenuAtualizarChamado: seleciona um chamado para atualização.
+    - AlterarPrioridade: atualiza a prioridade e o período de um chamado.
+    - ExcluirChamado: remove da lista um chamado selecionado.
 */
     typedef struct dados
 {
