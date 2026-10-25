@@ -496,7 +496,6 @@ void ExibirListaGeral(Lista *L, char *titulo)
     if (L == NULL || verificaVazia(L))
     {
         printf("\nNenhuma solicitação cadastrada.\n");
-        system("pause");
         return;
     }
 
