@@ -437,11 +437,6 @@ void ConsultarChamado(Lista *L)
                 printf("Nome do Equipamento: %s\n", atual->nomeEquipamento);
                 printf("Código do Equipamento: %s\n", atual->codigoEquipamento);
                 printf("Prioridade: %d | Período: %d dias\n", atual->prioridade, atual->periodo);
-                printf("Codigo do Chamado: %d\n", atual->codigoSolicitacao);
-                printf("Nome do Equipamento: %s \n", atual->nomeEquipamento);
-                printf("Codigo do Equipamento: %s\n", atual->codigoEquipamento);
-                printf("Prioridade: %d | Periodo: %d dias\n", atual->prioridade, atual->periodo);
-
                 encontrou = 1; // Marca que encontrou
                 break; // Para de procurar na lista
             }
