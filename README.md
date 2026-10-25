@@ -19,8 +19,6 @@ O programa permite cadastrar, consultar, listar, atualizar e excluir chamados re
 
 - `Gerenciador.c` — menu principal e fluxo do programa;
 - `funcoes.h` — estrutura de dados, funções de cadastro, consulta, ordenação e exclusão;
-- `Gerenciador.exe` — executável gerado para execução no ambiente Windows;
-- `Gerenciador.o` — arquivo objeto do processo de compilação.
 
 ## Requisitos
 
