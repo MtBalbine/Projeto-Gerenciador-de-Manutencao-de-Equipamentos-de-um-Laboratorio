@@ -9,7 +9,7 @@ int main()
 
     int opcao = 0;
 
-    Chamados* lista  = InicializaListaChamado();
+    Lista* L  = InicializaListaChamado();
 
     do
     {
@@ -34,7 +34,7 @@ int main()
                 // Função da biblioteca: cadastrar novo chamado
                 // Cria um novo registro com código, equipamento, prioridade e prazo.
                 // Deve chamar a função de inserção na lista.
-                NovoChamado(lista);
+                NovoChamado(L);
                 break;
 
             case 2:
@@ -57,12 +57,11 @@ int main()
 
                     if (subOpcao == 1)
                     {
-                        ExibirListaGeral(lista, "===== LISTA GERAL DE SOLICITAÇÕES =====");
+                        ExibirListaGeral(L, "===== LISTA GERAL DE SOLICITAÇÕES =====");
                     }
                     else if (subOpcao == 2)
                     {
-                        ExibirListaGeral(lista,"======== ORDEM DE MANUTENÇÃO GERAL ========\n");
-                        exibirOrdemManutencao(lista);
+                        exibirOrdemManutencao(L);
                     }
                     system("pause");
                 }while (subOpcao != 0);
@@ -73,7 +72,7 @@ int main()
                 // Funcao da biblioteca: buscar chamado
                 // Pesquisa um chamado pelo codigo do equipamento ou codigo da solicitacao.
                 // Deve retornar as informacoes do registro encontrado.
-                ConsultarChamado(lista);
+                ConsultarChamado(L);
                 break;
 
             case 4:
@@ -81,7 +80,7 @@ int main()
                 //Dado o código de solicitação o usuário pode alterar a prioridade e o período dela,
                 //respeitando os limites do período associado a nova prioridade.
                 // EXTRA: Permite alterar prioridade, prazo, nome do equipamento ou status.
-                AlterarPrioridade(lista);
+                AlterarPrioridade(L);
                 system("pause");
                 break;
 
@@ -92,13 +91,13 @@ int main()
                 int excluir;
                 do
                 {
-                     if(verificaVazia(lista))
+                     if(verificaVazia(L))
                 {
                     printf("\n Lista vazia, impossível prosseguir!\n");
                     system("pause");
                     break;
                 }
-                    ExcluirChamado(lista);
+                    ExcluirChamado(L);
                     system ("cls");
                     printf("\n Deseja excluir mais algum chamado?\n 1 - SIM \n 2 - NÃO \n Resposta:");
                     scanf("%d", &excluir);
@@ -107,11 +106,11 @@ int main()
 
             case 0:
                 printf("\nEncerrando o sistema...\n");
-                LimparListaChamados(lista);
+                LimparListaChamados(L);
                 break;
 
             default:
-                printf("\nOpção inválida! Tente novamente.\n");
+                printf("\n Opção inválida! Tente novamente.\n");
                 break;
         }
 
