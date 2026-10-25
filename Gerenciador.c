@@ -16,12 +16,12 @@ int main()
         system ("cls");
 
         printf("\n===== GERENCIADOR DE MANUTENCAO =====\n");
-        printf("1 - Novo chamado\n"); // matheus finalizar -                   1 - Inserir uma Solicitação de Manutenção
-        printf("2 - Menu de listagem\n"); // lele -                             5 e 6 - Exibir a ordem da realizaçao da manutenção e Exibir lista
-        printf("3 - Consultar chamado\n"); // ju -                             3 - Consultar uma Solicitação
-        printf("4 - Atualizar prioridade do chamado\n"); //matheus                4 -  Alterar a prioridade e/ou período de uma Solicitação
-        printf("5 - Excluir chamado\n"); // so -                               2 - Remover uma solicitação
-        printf("0 - Sair\n"); // so -                                          0 - Finaliza
+        printf("1 - Novo chamado\n"); // matheus  -                           1 - Inserir uma Solicitação de Manutenção
+        printf("2 - Menu de listagem\n"); // lele -                           5 e 6 - Exibir a ordem da realizaçao da manutenção e Exibir lista
+        printf("3 - Consultar chamado\n"); // ju -                            3 - Consultar uma Solicitação
+        printf("4 - Atualizar prioridade do chamado\n"); //matheus            4 -  Alterar a prioridade e/ou período de uma Solicitação
+        printf("5 - Excluir chamado\n"); // so -                              2 - Remover uma solicitação
+        printf("0 - Sair\n"); // so -                                         0 - Finaliza
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
         getchar();
